@@ -1,0 +1,99 @@
+<!-- Sidebar -->
+<div class="sidebar" id="sidebar">
+    <div class="sidebar-header">
+        <div class="sidebar-logo">
+            <i class="fas fa-brain sidebar-logo-icon"></i>
+            <span>Creative<strong>AI</strong></span>
+        </div>
+    </div>
+    <div class="sidebar-body">
+        <div class="sidebar-section">
+            <div class="sidebar-section-title">Main</div>
+            <ul class="sidebar-menu">
+                <li class="sidebar-menu-item">
+                    <a href="{% url 'home' %}" class="sidebar-menu-link active">
+                        <i class="fas fa-home sidebar-menu-icon"></i>
+                        <span>Dashboard</span>
+                    </a>
+                </li>
+                <li class="sidebar-menu-item">
+                    <a href="#" class="sidebar-menu-link">
+                        <i class="fas fa-folder sidebar-menu-icon"></i>
+                        <span>Projects</span>
+                    </a>
+                </li>
+                <li class="sidebar-menu-item">
+                    <a href="#" class="sidebar-menu-link">
+                        <i class="fas fa-lightbulb sidebar-menu-icon"></i>
+                        <span>Templates</span>
+                    </a>
+                </li>
+                <li class="sidebar-menu-item">
+                    <a href="#" class="sidebar-menu-link">
+                        <i class="fas fa-book sidebar-menu-icon"></i>
+                        <span>Resources</span>
+                    </a>
+                </li>
+            </ul>
+        </div>
+        <div class="sidebar-section">
+            <div class="sidebar-section-title">Workspace</div>
+            <ul class="sidebar-menu">
+                <li class="sidebar-menu-item">
+                    <a href="{% url 'text' %}" class="sidebar-menu-link" id="text-generator-link">
+                        <i class="fas fa-feather-alt sidebar-menu-icon"></i>
+                        <span>Text Generator</span>
+                    </a>
+                </li>
+                <li class="sidebar-menu-item">
+                    <a href="#" class="sidebar-menu-link">
+                        <i class="fas fa-image sidebar-menu-icon"></i>
+                        <span>Image Creator</span>
+                    </a>
+                </li>
+                <li class="sidebar-menu-item">
+                    <a href="#" class="sidebar-menu-link">
+                        <i class="fas fa-code sidebar-menu-icon"></i>
+                        <span>Code Assistant</span>
+                    </a>
+                </li>
+                <li class="sidebar-menu-item">
+                    <a href="#" class="sidebar-menu-link">
+                        <i class="fas fa-chart-line sidebar-menu-icon"></i>
+                        <span>Data Analysis</span>
+                    </a>
+                </li>
+            </ul>
+        </div>
+
+        <div class="sidebar-section">
+            <div class="sidebar-section-title">Account</div>
+            <ul class="sidebar-menu">
+                <li class="sidebar-menu-item">
+                    <a href="#" class="sidebar-menu-link">
+                        <i class="fas fa-cog sidebar-menu-icon"></i>
+                        <span>Settings</span>
+                    </a>
+                </li>
+                <li class="sidebar-menu-item">
+                    <a href="#" class="sidebar-menu-link">
+                        <i class="fas fa-headset sidebar-menu-icon"></i>
+                        <span>Support</span>
+                    </a>
+                </li>
+            </ul>
+        </div>
+    </div>
+    <div class="sidebar-footer">
+        <div class="sidebar-profile">
+            <img src="/api/placeholder/40/40" alt="Profile" class="avatar">
+            <div class="sidebar-profile-info">
+                <div class="sidebar-profile-name">Alex Morgan</div>
+                <div class="sidebar-profile-email">alex@example.com</div>
+            </div>
+            <div class="sidebar-profile-menu">
+                <i class="fas fa-chevron-down"></i>
+            </div>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,317 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+ <!-- Main Workspace -->
+            <div class="workspace" id="main-workspace">
+                <div class="workspace-header">
+                    <div class="workspace-title">
+                        <i class="fas fa-magic workspace-title-icon"></i>
+                        <span>AI Workspace</span>
+                    </div>
+                    <div class="workspace-actions">
+                        <button class="btn btn-outline">
+                            <i class="fas fa-history"></i>
+                            <span>History</span>
+                        </button>
+                        <button class="btn btn-primary">
+                            <i class="fas fa-save"></i>
+                            <span>Save</span>
+                        </button>
+                    </div>
+                </div>
+                <div class="workspace-tabs">
+                    <div id="#text-generator" class="workspace-tab active" data-tab="text">Text Generator</div>
+                    <div id="#image-creator" class="workspace-tab" data-tab="image">Image Creator</div>
+                    <div class="workspace-tab" data-tab="code">Code Assistant</div>
+                </div>
+                <div class="workspace-content">
+                    <div class="ai-workspace">
+                        <div class="ai-prompt">
+                            <textarea class="ai-textarea"
+                                      placeholder="Describe what you want to generate..."></textarea>
+                            <div class="ai-actions">
+                                <button class="btn btn-primary ai-generate">
+                                    <i class="fas fa-bolt"></i>
+                                    <span>Generate</span>
+                                </button>
+                                <div class="ai-options">
+                                    <div class="ai-option">
+                                        <span class="ai-option-label">Model:</span>
+                                        <select class="form-control">
+                                            <option>Creative GPT-4</option>
+                                            <option>Standard GPT-3.5</option>
+                                            <option>Fast GPT-3</option>
+                                        </select>
+                                    </div>
+                                    <div class="ai-option">
+                                        <span class="ai-option-label">Length:</span>
+                                        <select class="form-control">
+                                            <option>Short</option>
+                                            <option>Medium</option>
+                                            <option>Long</option>
+                                        </select>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="ai-result">
+                            <div class="ai-result-header">
+                                <div class="ai-result-title">
+                                    <i class="fas fa-robot"></i>
+                                    <span>Generated Output</span>
+                                </div>
+                                <div class="ai-result-actions">
+                                    <div class="ai-result-action">
+                                        <i class="fas fa-copy"></i>
+                                    </div>
+                                    <div class="ai-result-action">
+                                        <i class="fas fa-download"></i>
+                                    </div>
+                                    <div class="ai-result-action">
+                                        <i class="fas fa-redo-alt"></i>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="ai-result-body">
+                                <p>Your AI-generated content will appear here after you click the Generate button. Try
+                                    describing what you need in detail for the best results!</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Recent Projects -->
+            <div class="workspace" style="margin-top: 1.5rem;">
+                <div class="workspace-header">
+                    <div class="workspace-title">
+                        <i class="fas fa-folder workspace-title-icon"></i>
+                        <span>Recent Projects</span>
+                    </div>
+                    <div class="workspace-actions">
+                        <button class="btn btn-outline">
+                            <i class="fas fa-filter"></i>
+                            <span>Filter</span>
+                        </button>
+                        <button class="btn btn-primary">
+                            <i class="fas fa-plus"></i>
+                            <span>New Project</span>
+                        </button>
+                    </div>
+                </div>
+                <div class="workspace-content">
+                    <div class="projects-grid">
+                        <!-- Project Card 1 -->
+                        <div class="project-card">
+                            <div class="project-header">
+                                <img src="/api/placeholder/400/140" alt="Project Thumbnail" class="project-thumbnail">
+                                <div class="project-badges">
+                                    <span class="badge badge-primary">Article</span>
+                                </div>
+                                <div class="project-actions">
+                                    <button class="btn btn-sm btn-outline">
+                                        <i class="fas fa-ellipsis-v"></i>
+                                    </button>
+                                </div>
+                            </div>
+                            <div class="project-body">
+                                <h3 class="project-title">Marketing Blog Series</h3>
+                                <p class="project-description">A collection of AI-generated marketing articles focused
+                                    on
+                                    digital growth strategies for SaaS companies.</p>
+                                <div class="project-meta">
+                                    <div class="project-date">
+                                        <i class="far fa-calendar-alt"></i>
+                                        <span>Updated 2 days ago</span>
+                                    </div>
+                                    <span class="badge badge-success">Completed</span>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Project Card 2 -->
+                        <div class="project-card">
+                            <div class="project-header">
+                                <img src="/api/placeholder/400/140" alt="Project Thumbnail" class="project-thumbnail">
+                                <div class="project-badges">
+                                    <span class="badge badge-warning">Images</span>
+                                </div>
+                                <div class="project-actions">
+                                    <button class="btn btn-sm btn-outline">
+                                        <i class="fas fa-ellipsis-v"></i>
+                                    </button>
+                                </div>
+                            </div>
+                            <div class="project-body">
+                                <h3 class="project-title">Product Showcase Visuals</h3>
+                                <p class="project-description">AI-generated product images for the upcoming spring
+                                    collection launch campaign.</p>
+                                <div class="project-meta">
+                                    <div class="project-date">
+                                        <i class="far fa-calendar-alt"></i>
+                                        <span>Updated yesterday</span>
+                                    </div>
+                                    <span class="badge badge-primary">In Progress</span>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Project Card 3 -->
+                        <div class="project-card">
+                            <div class="project-header">
+                                <img src="/api/placeholder/400/140" alt="Project Thumbnail" class="project-thumbnail">
+                                <div class="project-badges">
+                                    <span class="badge badge-primary">Code</span>
+                                </div>
+                                <div class="project-actions">
+                                    <button class="btn btn-sm btn-outline">
+                                        <i class="fas fa-ellipsis-v"></i>
+                                    </button>
+                                </div>
+                            </div>
+                            <div class="project-body">
+                                <h3 class="project-title">Chatbot Implementation</h3>
+                                <p class="project-description">Custom AI chatbot development for customer support
+                                    integration on the main website.</p>
+                                <div class="project-meta">
+                                    <div class="project-date">
+                                        <i class="far fa-calendar-alt"></i>
+                                        <span>Updated 5 days ago</span>
+                                    </div>
+                                    <span class="badge badge-primary">In Progress</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Two Column Layout for Subscription and Activity -->
+            <div style="display: grid; grid-template-columns: 2fr 1fr; gap: 1.5rem; margin-top: 1.5rem;">
+                <!-- Subscription Card -->
+                <div class="subscription-card">
+                    <div class="subscription-header">
+                        <h3 class="subscription-title">Your Subscription</h3>
+                        <div class="subscription-plan">
+                            <i class="fas fa-star"></i>
+                            <span>Pro Plan - Monthly</span>
+                        </div>
+                    </div>
+                    <div class="subscription-body">
+                        <div class="subscription-stats">
+                            <div class="subscription-stat">
+                                <div class="subscription-stat-label">Usage Period</div>
+                                <div class="subscription-stat-value">Feb 1 - Feb 28</div>
+                            </div>
+                            <div class="subscription-stat">
+                                <div class="subscription-stat-label">Credits Used</div>
+                                <div class="subscription-stat-value">3,756 / 5,000</div>
+                            </div>
+                        </div>
+                        <div class="subscription-progress">
+                            <div class="subscription-progress-label">
+                                <span>Credit Usage</span>
+                                <span>75%</span>
+                            </div>
+                            <div class="subscription-progress-bar">
+                                <div class="subscription-progress-value" style="width: 75%;"></div>
+                            </div>
+                        </div>
+                        <div class="subscription-actions">
+                            <button class="btn btn-outline">
+                                <i class="fas fa-history"></i>
+                                <span>Usage History</span>
+                            </button>
+                            <button class="btn btn-primary">
+                                <i class="fas fa-arrow-up"></i>
+                                <span>Upgrade Plan</span>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Activity Feed -->
+                <div class="workspace">
+                    <div class="workspace-header">
+                        <div class="workspace-title">
+                            <i class="fas fa-chart-line workspace-title-icon"></i>
+                            <span>Recent Activity</span>
+                        </div>
+                    </div>
+                    <div class="workspace-content">
+                        <div class="activity-list">
+                            <div class="activity-item">
+                                <div class="activity-icon activity-icon-primary">
+                                    <i class="fas fa-file-alt"></i>
+                                </div>
+                                <div class="activity-content">
+                                    <div class="activity-title">New Article Generated</div>
+                                    <div class="activity-text">Created "Top 10 AI Tools for Marketers" in the Marketing
+                                        Blog
+                                        project
+                                    </div>
+                                    <div class="activity-meta">
+                                        <span><i class="far fa-clock"></i> Today, 10:45 AM</span>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="activity-item">
+                                <div class="activity-icon activity-icon-success">
+                                    <i class="fas fa-user-edit"></i>
+                                </div>
+                                <div class="activity-content">
+                                    <div class="activity-title">Project Updated</div>
+                                    <div class="activity-text">Made changes to "Product Showcase Visuals" project
+                                        settings
+                                        and generated 5 new images
+                                    </div>
+                                    <div class="activity-meta">
+                                        <span><i class="far fa-clock"></i> Yesterday, 4:23 PM</span>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="activity-item">
+                                <div class="activity-icon activity-icon-warning">
+                                    <i class="fas fa-code"></i>
+                                </div>
+                                <div class="activity-content">
+                                    <div class="activity-title">Code Generation</div>
+                                    <div class="activity-text">Generated JavaScript implementation for the chatbot
+                                        response
+                                        handler
+                                    </div>
+                                    <div class="activity-meta">
+                                        <span><i class="far fa-clock"></i> Feb 15, 2:18 PM</span>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="activity-item">
+                                <div class="activity-icon activity-icon-info">
+                                    <i class="fas fa-credit-card"></i>
+                                </div>
+                                <div class="activity-content">
+                                    <div class="activity-title">Subscription Renewed</div>
+                                    <div class="activity-text">Your Pro Plan subscription was automatically renewed for
+                                        the
+                                        next month
+                                    </div>
+                                    <div class="activity-meta">
+                                        <span><i class="far fa-clock"></i> Feb 1, 12:00 AM</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+</body>
+</html>
