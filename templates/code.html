@@ -1,0 +1,640 @@
+{% extends 'parts/base.html' %}
+{% block content %}
+{% include 'parts/sidebar.html' %}
+{% include 'parts/header.html' %}
+<!DOCTYPE html>
+<html>
+<head>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism-tomorrow.min.css" rel="stylesheet"/>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/plugins/toolbar/prism-toolbar.min.css"
+          rel="stylesheet"/>
+    <style>
+        .main-content {
+            padding: 2rem;
+            background-color: #f8f9fa;
+            min-height: 100vh;
+        }
+
+        .page-header {
+            margin-bottom: 2rem;
+        }
+
+        .page-title {
+            font-size: 1.5rem;
+            font-weight: 600;
+            color: #1a1a1a;
+            margin-bottom: 0.5rem;
+        }
+
+        .page-subtitle {
+            color: #666;
+            font-size: 0.95rem;
+        }
+
+        .code-generator-container {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 1.5rem;
+        }
+
+        .input-section, .output-section {
+            background: white;
+            border-radius: 0.5rem;
+            padding: 1.5rem;
+            box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+        }
+
+        .section-title {
+            font-size: 1.1rem;
+            font-weight: 600;
+            margin-bottom: 1rem;
+            color: #1a1a1a;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .language-selector {
+            display: flex;
+            gap: 0.5rem;
+            margin-bottom: 1rem;
+            flex-wrap: wrap;
+        }
+
+        .language-option {
+            padding: 0.5rem 1rem;
+            border: 1px solid #e0e0e0;
+            border-radius: 0.375rem;
+            cursor: pointer;
+            font-size: 0.9rem;
+            transition: all 0.2s;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .language-option:hover {
+            border-color: #6366f1;
+            background: #f5f5ff;
+        }
+
+        .language-option.active {
+            background: #6366f1;
+            color: white;
+            border-color: #6366f1;
+        }
+
+        .language-icon {
+            width: 16px;
+            height: 16px;
+        }
+
+        .input-textarea {
+            width: 100%;
+            min-height: 200px;
+            padding: 1rem;
+            border: 1px solid #e0e0e0;
+            border-radius: 0.375rem;
+            margin-bottom: 1rem;
+            resize: vertical;
+            font-family: monospace;
+            line-height: 1.5;
+        }
+
+        .generate-btn {
+            width: 100%;
+            padding: 0.875rem;
+            background: #6366f1;
+            color: white;
+            border: none;
+            border-radius: 0.375rem;
+            font-weight: 500;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.5rem;
+        }
+
+        .generate-btn:hover {
+            background: #4f46e5;
+        }
+
+        .generate-btn:disabled {
+            background: #c7c7c7;
+            cursor: not-allowed;
+        }
+
+        .code-output {
+            position: relative;
+            margin-top: 1rem;
+        }
+
+        .code-actions {
+            position: absolute;
+            top: 0.5rem;
+            right: 0.5rem;
+            display: flex;
+            gap: 0.5rem;
+            z-index: 10;
+        }
+
+        .code-action-btn {
+            padding: 0.5rem;
+            border-radius: 0.375rem;
+            background: rgba(255, 255, 255, 0.9);
+            border: 1px solid #e0e0e0;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.2s;
+        }
+
+        .code-action-btn:hover {
+            background: white;
+            border-color: #6366f1;
+            color: #6366f1;
+        }
+
+        .loading-spinner {
+            animation: spin 1s linear infinite;
+        }
+
+        @keyframes spin {
+            from {
+                transform: rotate(0deg);
+            }
+            to {
+                transform: rotate(360deg);
+            }
+        }
+
+        /* Code editor specific styles */
+        .code-editor {
+            border-radius: 0.375rem;
+            overflow: hidden;
+            margin-top: 1rem;
+        }
+
+        .code-editor pre {
+            margin: 0 !important;
+            padding: 1rem !important;
+            max-height: 500px;
+            overflow: auto;
+        }
+
+        /* Notifications */
+        .notification {
+            position: fixed;
+            bottom: 1rem;
+            right: 1rem;
+            padding: 1rem;
+            background: white;
+            border-radius: 0.375rem;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            animation: slideIn 0.3s ease-out;
+        }
+
+        @keyframes slideIn {
+            from {
+                transform: translateX(100%);
+            }
+            to {
+                transform: translateX(0);
+            }
+        }
+
+        .tab-bar {
+            display: flex;
+            gap: 0.5rem;
+            margin-bottom: 1rem;
+        }
+
+        .tab {
+            padding: 0.5rem 1rem;
+            border-radius: 0.375rem;
+            cursor: pointer;
+            background: #f5f5f5;
+            transition: all 0.2s;
+        }
+
+        .tab.active {
+            background: #6366f1;
+            color: white;
+        }
+    </style>
+</head>
+<body>
+<div class="main-content">
+    <div class="page-header">
+        <h1 class="page-title">Code Assistant</h1>
+        <p class="page-subtitle">Generate code in multiple programming languages using AI</p>
+    </div>
+
+    <div class="code-generator-container">
+        <div class="input-section">
+            <div class="section-title">Problem Statement</div>
+            <textarea class="input-textarea" placeholder="Describe what you want to build or the problem you want to solve...
+Example: Create a function that finds the largest number in an array"></textarea>
+            <div class="language-selector">
+                <div class="language-option active">
+                    <i class="fab fa-python"></i>
+                    Python
+                </div>
+                <div class="language-option">
+                    <i class="fab fa-js"></i>
+                    JavaScript
+                </div>
+                <div class="language-option">
+                    <i class="fab fa-java"></i>
+                    Java
+                </div>
+                <div class="language-option">
+                    <i class="fab fa-php"></i>
+                    PHP
+                </div>
+                <div class="language-option">
+                    <i class="fas fa-code"></i>
+                    C++
+                </div>
+            </div>
+            <button class="generate-btn" id="generateBtn">
+                <i class="fas fa-code"></i>
+                Generate Code
+            </button>
+        </div>
+
+        <div class="output-section">
+            <div class="section-title">
+                Generated Code
+                <div class="tab-bar">
+                    <div class="tab active">Code</div>
+                    <div class="tab">Tests</div>
+                    <div class="tab">Documentation</div>
+                </div>
+            </div>
+            <div class="code-editor">
+                <div class="code-actions">
+                    <button class="code-action-btn" title="Copy code">
+                        <i class="fas fa-copy"></i>
+                    </button>
+                    <button class="code-action-btn" title="Download code">
+                        <i class="fas fa-download"></i>
+                    </button>
+                </div>
+                <pre><code class="language-python">def find_largest_number(arr):
+    """
+    Finds the largest number in an array.
+
+    Args:
+        arr (list): List of numbers
+
+    Returns:
+        number: The largest number in the array
+    """
+    if not arr:
+        return None
+
+    return max(arr)
+
+# Example usage:
+numbers = [1, 5, 2, 8, 3]
+result = find_largest_number(numbers)
+print(f"The largest number is: {result}")  # Output: The largest number is: 8</code></pre>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/components/prism-python.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/components/prism-javascript.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/components/prism-java.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/components/prism-php.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/components/prism-cpp.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/plugins/toolbar/prism-toolbar.min.js"></script>
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+    const generateBtn = document.getElementById('generateBtn');
+    const promptInput = document.querySelector('.input-textarea');
+    const codeEditor = document.querySelector('.code-editor pre code');
+    const languageOptions = document.querySelectorAll('.language-option');
+    const tabs = document.querySelectorAll('.tab');
+    let currentLanguage = 'python';
+
+    function getSampleCode(language) {
+        const samples = {
+            python: `def find_largest_number(arr):
+    """
+    Finds the largest number in an array.
+
+    Args:
+        arr (list): List of numbers
+
+    Returns:
+        number: The largest number in the array
+    """
+    if not arr:
+        return None
+
+    return max(arr)
+
+# Example usage:
+numbers = [1, 5, 2, 8, 3]
+result = find_largest_number(numbers)
+print(f"The largest number is: {result}")`,
+
+            javascript: `function findLargestNumber(arr) {
+    /**
+     * Finds the largest number in an array
+     * @param {number[]} arr - Array of numbers
+     * @returns {number|null} The largest number or null if array is empty
+     */
+    if (!arr.length) {
+        return null;
+    }
+
+    return Math.max(...arr);
+}
+
+// Example usage:
+const numbers = [1, 5, 2, 8, 3];
+const result = findLargestNumber(numbers);
+console.log(\`The largest number is: \${result}\`);`,
+
+            java: `public class ArrayUtils {
+    /**
+     * Finds the largest number in an array
+     * @param arr Array of numbers
+     * @return The largest number or null if array is empty
+     */
+    public static Integer findLargestNumber(int[] arr) {
+        if (arr == null || arr.length == 0) {
+            return null;
+        }
+
+        int max = arr[0];
+        for (int num : arr) {
+            if (num > max) {
+                max = num;
+            }
+        }
+        return max;
+    }
+
+    public static void main(String[] args) {
+        int[] numbers = {1, 5, 2, 8, 3};
+        Integer result = findLargestNumber(numbers);
+        System.out.printf("The largest number is: %d%n", result);
+    }
+}`,
+
+            php: `<?php
+/**
+ * Finds the largest number in an array
+ * @param array $arr Array of numbers
+ * @return int|null The largest number or null if array is empty
+ */
+function findLargestNumber(array $arr) {
+    if (empty($arr)) {
+        return null;
+    }
+
+    return max($arr);
+}
+
+// Example usage:
+$numbers = [1, 5, 2, 8, 3];
+$result = findLargestNumber($numbers);
+echo "The largest number is: " . $result;
+?>`,
+
+            cpp: `#include <iostream>
+#include <vector>
+#include <algorithm>
+
+/**
+ * Finds the largest number in a vector
+ * @param arr Vector of numbers
+ * @return The largest number or nullptr if vector is empty
+ */
+int* findLargestNumber(std::vector<int>& arr) {
+    if (arr.empty()) {
+        return nullptr;
+    }
+
+    int* max = new int(*(std::max_element(arr.begin(), arr.end())));
+    return max;
+}
+
+int main() {
+    std::vector<int> numbers = {1, 5, 2, 8, 3};
+    int* result = findLargestNumber(numbers);
+
+    if (result != nullptr) {
+        std::cout << "The largest number is: " << *result << std::endl;
+        delete result;
+    }
+
+    return 0;
+}`
+        };
+
+        return samples[language] || 'Code generation not supported for this language';
+    }
+
+    function generateTestCode(language) {
+        const tests = {
+            python: `import unittest
+
+class TestFindLargestNumber(unittest.TestCase):
+    def test_normal_array(self):
+        self.assertEqual(find_largest_number([1, 5, 2, 8, 3]), 8)
+
+    def test_empty_array(self):
+        self.assertIsNone(find_largest_number([]))
+
+    def test_negative_numbers(self):
+        self.assertEqual(find_largest_number([-1, -5, -2]), -1)
+
+if __name__ == '__main__':
+    unittest.main()`,
+
+            javascript: `describe('findLargestNumber', () => {
+    test('finds largest in normal array', () => {
+        expect(findLargestNumber([1, 5, 2, 8, 3])).toBe(8);
+    });
+
+    test('returns null for empty array', () => {
+        expect(findLargestNumber([])).toBeNull();
+    });
+
+    test('handles negative numbers', () => {
+        expect(findLargestNumber([-1, -5, -2])).toBe(-1);
+    });
+});`
+            // Add test code for other languages as needed
+        };
+
+        return tests[language] || '// Tests not available for this language';
+    }
+
+    function generateDocumentation(language) {
+        return `# Function Documentation
+
+## Overview
+The \`findLargestNumber\` function finds the largest number in an array/list of numbers.
+
+## Parameters
+- \`arr\`: Array/list of numbers
+
+## Returns
+- The largest number in the array
+- \`null\` or \`None\` if the array is empty
+
+## Examples
+\`\`\`${language}
+${getSampleCode(language)}
+\`\`\`
+
+## Error Handling
+- Returns null/None for empty arrays
+- Handles negative numbers
+- Handles arrays with duplicate values
+
+## Performance
+- Time Complexity: O(n)
+- Space Complexity: O(1)`;
+    }
+
+    function showTests(language) {
+        const codeEditor = document.querySelector('.code-editor pre code');
+        const testCode = generateTestCode(language);
+        codeEditor.textContent = testCode;
+        codeEditor.className = `language-${language}`;
+        Prism.highlightElement(codeEditor);
+    }
+
+    function showDocumentation(language) {
+        const codeEditor = document.querySelector('.code-editor pre code');
+        const documentation = generateDocumentation(language);
+        codeEditor.textContent = documentation;
+        codeEditor.className = 'language-markdown';
+        Prism.highlightElement(codeEditor);
+    }
+
+    function getFileExtension(language) {
+        const extensions = {
+            python: '.py',
+            javascript: '.js',
+            java: '.java',
+            php: '.php',
+            cpp: '.cpp'
+        };
+        return extensions[language] || '.txt';
+    }
+
+    function showNotification(message, type) {
+        const notification = document.createElement('div');
+        notification.className = 'notification';
+        notification.innerHTML = `
+            <i class="fas fa-${type === 'success' ? 'check-circle' : 'exclamation-circle'}"></i>
+            ${message}
+        `;
+        document.body.appendChild(notification);
+        setTimeout(() => notification.remove(), 3000);
+    }
+
+    // Language selection
+    languageOptions.forEach(option => {
+        option.addEventListener('click', function() {
+            languageOptions.forEach(opt => opt.classList.remove('active'));
+            this.classList.add('active');
+            currentLanguage = this.textContent.trim().toLowerCase();
+            if (codeEditor.textContent.trim()) {
+                generateCode();
+            }
+        });
+    });
+
+    // Tab switching
+    tabs.forEach(tab => {
+        tab.addEventListener('click', function() {
+            tabs.forEach(t => t.classList.remove('active'));
+            this.classList.add('active');
+            const tabName = this.textContent.trim().toLowerCase();
+
+            switch(tabName) {
+                case 'tests':
+                    showTests(currentLanguage);
+                    break;
+                case 'documentation':
+                    showDocumentation(currentLanguage);
+                    break;
+                default:
+                    codeEditor.textContent = getSampleCode(currentLanguage);
+                    codeEditor.className = `language-${currentLanguage}`;
+                    Prism.highlightElement(codeEditor);
+            }
+        });
+    });
+
+    // Generate button handling
+    generateBtn.addEventListener('click', function() {
+        if (!promptInput.value.trim()) {
+            showNotification('Please enter a problem statement first', 'warning');
+            return;
+        }
+
+        // Show loading state
+        generateBtn.disabled = true;
+        generateBtn.innerHTML = `
+            <i class="fas fa-spinner loading-spinner"></i>
+            Generating...
+        `;
+
+        // Simulate code generation
+        setTimeout(() => {
+            const sampleCode = getSampleCode(currentLanguage);
+            codeEditor.textContent = sampleCode;
+            codeEditor.className = `language-${currentLanguage}`;
+            Prism.highlightElement(codeEditor);
+
+            // Reset button state
+            generateBtn.disabled = false;
+            generateBtn.innerHTML = `
+                <i class="fas fa-code"></i>
+                Generate Code
+            `;
+
+            showNotification('Code generated successfully!', 'success');
+        }, 1500);
+    });
+
+    // Copy button handling
+    const copyBtn = document.querySelector('.code-action-btn[title="Copy code"]');
+    copyBtn.addEventListener('click', function() {
+        navigator.clipboard.writeText(codeEditor.textContent)
+            .then(() => showNotification('Code copied to clipboard!', 'success'))
+            .catch(() => showNotification('Failed to copy code', 'error'));
+    });
+
+    // Download button handling
+    const downloadBtn = document.querySelector('.code-action-btn[title="Download code"]');
+    downloadBtn.addEventListener('click', function() {
+        const extension = getFileExtension(currentLanguage);
+        const blob = new Blob([codeEditor.textContent], { type: 'text/plain' });
+        const url = window.URL.createObjectURL(blob);
+        const a = document.createElement('a');
+        a.href = url;
+        a.download = `generated_code${extension}`;
+        a.click();
+        window.URL.revokeObjectURL(url);
+        showNotification('Code downloaded!', 'success');
+    });
+    })</script>
+{% endblock %}

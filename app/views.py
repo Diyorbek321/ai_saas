@@ -14,3 +14,12 @@ class LoginPage(TemplateView):
 
 class TextPage(TemplateView):
     template_name = 'text.html'
+
+class Image(TemplateView):
+    template_name = 'image.html'
+
+class Code(TemplateView):
+    template_name = 'code.html'
+
+class Settings(TemplateView):
+    template_name = 'setting.html'
