@@ -1,15 +1,12 @@
+from django import urls
 from django.urls import path
-from app.views import (
-    IndexPageAPIView, HomePageAPIView, LoginAPIView,
-    TextAPIView, ImageAPIView, CodeAPIView, SettingsAPIView
-)
-
+from app.views import IndexPageTemplateView,HomePageTemplateView,LoginPage,TextPage,Image,Code,Settings
 urlpatterns = [
-    path('api/index/', IndexPageAPIView.as_view(), name='index_api'),
-    path('api/home/', HomePageAPIView.as_view(), name='home_api'),
-    path('api/login/', LoginAPIView.as_view(), name='login_api'),
-    path('api/text/', TextAPIView.as_view(), name='text_api'),
-    path('api/image/', ImageAPIView.as_view(), name='image_api'),
-    path('api/code/', CodeAPIView.as_view(), name='code_api'),
-    path('api/settings/', SettingsAPIView.as_view(), name='settings_api'),
+    path('index/',IndexPageTemplateView.as_view(),name='index'),
+    path('home/',HomePageTemplateView.as_view(),name='home'),
+    path('login/',LoginPage.as_view(),name='login'),
+    path('text/',TextPage.as_view(),name='text'),
+    path('image/',Image.as_view(),name='image'),
+    path('code/',Code.as_view(),name='code'),
+    path('setting/',Settings.as_view(),name='setting'),
 ]

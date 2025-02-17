@@ -11,13 +11,11 @@
             height: 100vh;
             margin: 0;
         }
-
         .container {
             display: flex;
             width: 100%;
             height: 100vh;
         }
-
         .left-panel {
             width: 30%;
             background: linear-gradient(135deg, #0055cc, #ffcc00);
@@ -30,11 +28,9 @@
             color: white;
             transition: all 0.3s ease-in-out;
         }
-
         .left-panel:hover {
             background: linear-gradient(135deg, #0044aa, #e6b800);
         }
-
         .company-name {
             position: absolute;
             top: 20px;
@@ -42,7 +38,6 @@
             font-size: 1.5rem;
             font-weight: bold;
         }
-
         .signup-box {
             background: white;
             padding: 20px;
@@ -53,27 +48,17 @@
             color: black;
             animation: fadeIn 1s ease-in-out;
         }
-
         @keyframes fadeIn {
-            from {
-                opacity: 0;
-                transform: translateY(-20px);
-            }
-            to {
-                opacity: 1;
-                transform: translateY(0);
-            }
+            from { opacity: 0; transform: translateY(-20px); }
+            to { opacity: 1; transform: translateY(0); }
         }
-
         .signup-box h2 {
             margin-bottom: 10px;
         }
-
         .signup-box p {
             font-size: 14px;
             margin-bottom: 20px;
         }
-
         .signup-box button {
             width: 100%;
             padding: 10px;
@@ -87,11 +72,9 @@
             margin-top: 10px;
             transition: background 0.3s;
         }
-
         .signup-box button:hover {
             background: #003d99;
         }
-
         .signup-box input {
             width: 100%;
             padding: 10px;
@@ -99,7 +82,6 @@
             border: 1px solid #ccc;
             border-radius: 5px;
         }
-
         .right-panel {
             width: 70%;
             background: #ddd;
@@ -108,88 +90,43 @@
             justify-content: center;
             position: relative;
         }
-
         .right-panel img {
             width: 50%;
             object-fit: contain;
             animation: slideIn 1.5s ease-in-out;
         }
-
         @keyframes slideIn {
-            from {
-                opacity: 0;
-                transform: translateY(50px);
-            }
-            to {
-                opacity: 1;
-                transform: translateY(0);
-            }
+            from { opacity: 0; transform: translateY(50px); }
+            to { opacity: 1; transform: translateY(0); }
         }
     </style>
 </head>
 <body>
-<div class="container">
-    <div class="left-panel">
-        <h1 class="company-name">Company Name</h1>
-        <div class="signup-box">
-            <h2>Create an Account</h2>
-            <p>Tell us about yourself? Let's tailor your experience so it best suits you.</p>
-            <button onclick="setUserType('business')">Business Owner</button>
-            <button onclick="setUserType('personal')">Personal User</button>
-            <div id="accountDetails" style="display:none; margin-top: 20px;">
-                <label for="fullName"></label><input type="text" id="fullName" placeholder="Full Name">
-                <label for="email"></label><input type="email" id="email" placeholder="Email">
-                <label for="password"></label><input type="password" id="password" placeholder="Password">
-                <label for="confirmPassword"></label><input type="password" id="confirmPassword"
-                                                            placeholder="Confirm Password">
-                <button onclick="registerUser()">Continue</button>
-                <p id="message" style="color: red;"></p>
-
-
+    <div class="container">
+        <div class="left-panel">
+            <h1 class="company-name">Company Name</h1>
+            <div class="signup-box">
+                <h2>Create an Account</h2>
+                <p>Tell us about yourself? Let's tailor your experience so it best suits you.</p>
+                <button onclick="setUserType('business')">Business Owner</button>
+                <button onclick="setUserType('personal')">Personal User</button>
+                <div id="accountDetails" style="display:none; margin-top: 20px;">
+                    <input type="text" placeholder="Full Name">
+                    <input type="email" placeholder="Email">
+                    <input type="password" placeholder="Password">
+                    <input type="password" placeholder="Confirm Password">
+                    <button>Continue</button>
+                </div>
             </div>
         </div>
+        <div class="right-panel">
+            <img src="/signup-image.jpg" alt="Signup">
+        </div>
     </div>
-    <div class="right-panel">
-        <img src="/signup-image.jpg" alt="Signup">
-    </div>
-</div>
-<script>
-    function setUserType(type) {
-        document.getElementById('accountDetails').style.display = 'block';
-    }
-
-    async function registerUser() {
-        const fullName = document.getElementById("fullName").value;
-        const email = document.getElementById("email").value;
-        const password = document.getElementById("password").value;
-        const confirmPassword = document.getElementById("confirmPassword").value;
-
-        if (password !== confirmPassword) {
-            document.getElementById("message").innerText = "Passwords do not match!";
-            return;
+    <script>
+        function setUserType(type) {
+            document.getElementById('accountDetails').style.display = 'block';
         }
-
-        const response = await fetch("http://127.0.0.1:8000/api/register/", {  // Adjust the endpoint
-            method: "POST",
-            headers: {
-                "Content-Type": "application/json",
-            },
-            body: JSON.stringify({
-                full_name: fullName,
-                email: email,
-                password: password,
-            }),
-        });
-
-        const data = await response.json();
-
-        if (response.ok) {
-            document.getElementById("message").innerText = "Signup Successful!";
-        } else {
-            document.getElementById("message").innerText = data.error || "Signup Failed!";
-        }
-    }
-
-</script>
+    </script>
 </body>
 </html>
