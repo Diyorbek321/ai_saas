@@ -49,3 +49,9 @@ class Template(TemplateView):
 
 class Support(TemplateView):
     template_name = 'support.html'
+
+class Data(TemplateView):
+    template_name = 'data.html'
+
+class Resources(TemplateView):
+    template_name = 'resources.html'
