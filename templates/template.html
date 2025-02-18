@@ -1,0 +1,376 @@
+{% extends 'parts/base.html' %}
+{% block content %}
+    {% include 'parts/header.html' %}
+    {% include 'parts/sidebar.html' %}
+    <!DOCTYPE html>
+    <html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <style>
+            * {
+                margin: 0;
+                padding: 0;
+                box-sizing: border-box;
+            }
+
+            body {
+                font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+                background-color: #f8f9fa;
+            }
+
+            .container {
+                display: flex;
+                min-height: 100vh;
+            }
+
+            /* Sidebar styles (keeping consistent with previous design) */
+            .sidebar {
+                width: 240px;
+                background-color: #ffffff;
+                padding: 1.5rem;
+                border-right: 1px solid #e9ecef;
+                position: fixed;
+                height: 100vh;
+            }
+
+            /* Main Content Area */
+            .main-content {
+                margin-left: 240px;
+                flex-grow: 1;
+                padding: 2rem;
+            }
+
+            /* Templates Header Section */
+            .templates-header {
+                margin-bottom: 2rem;
+            }
+
+            .templates-title {
+                font-size: 1.5rem;
+                font-weight: 600;
+                color: #2d3436;
+                margin-bottom: 1rem;
+            }
+
+            .templates-filters {
+                display: flex;
+                gap: 1rem;
+                margin-bottom: 1.5rem;
+            }
+
+            .filter-button {
+                padding: 0.5rem 1rem;
+                border: none;
+                background-color: #fff;
+                border-radius: 20px;
+                color: #636e72;
+                cursor: pointer;
+                transition: all 0.3s ease;
+                font-size: 0.9rem;
+                box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+            }
+
+            .filter-button:hover {
+                background-color: #f1f2f6;
+            }
+
+            .filter-button.active {
+                background-color: #6c5ce7;
+                color: white;
+            }
+
+            /* Search Bar */
+            .search-bar {
+                position: relative;
+                max-width: 400px;
+                margin-bottom: 2rem;
+            }
+
+            .search-input {
+                width: 100%;
+                padding: 0.75rem 1rem 0.75rem 2.5rem;
+                border: 1px solid #e9ecef;
+                border-radius: 8px;
+                font-size: 0.9rem;
+                transition: all 0.3s ease;
+            }
+
+            .search-input:focus {
+                outline: none;
+                border-color: #6c5ce7;
+                box-shadow: 0 0 0 3px rgba(108, 92, 231, 0.1);
+            }
+
+            .search-icon {
+                position: absolute;
+                left: 1rem;
+                top: 50%;
+                transform: translateY(-50%);
+                color: #b2bec3;
+            }
+
+            /* Templates Grid */
+            .templates-grid {
+                display: grid;
+                grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+                gap: 1.5rem;
+            }
+
+            .template-card {
+                background: white;
+                border-radius: 12px;
+                overflow: hidden;
+                transition: transform 0.3s ease, box-shadow 0.3s ease;
+                box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+            }
+
+            .template-card:hover {
+                transform: translateY(-5px);
+                box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+            }
+
+            .template-preview {
+                position: relative;
+                height: 160px;
+                background-color: #f8f9fa;
+                overflow: hidden;
+            }
+
+            .template-preview img {
+                width: 100%;
+                height: 100%;
+                object-fit: cover;
+            }
+
+            .template-overlay {
+                position: absolute;
+                top: 0;
+                left: 0;
+                right: 0;
+                bottom: 0;
+                background: rgba(108, 92, 231, 0.9);
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                opacity: 0;
+                transition: opacity 0.3s ease;
+            }
+
+            .template-card:hover .template-overlay {
+                opacity: 1;
+            }
+
+            .preview-button {
+                padding: 0.75rem 1.5rem;
+                background-color: white;
+                color: #6c5ce7;
+                border: none;
+                border-radius: 25px;
+                font-weight: 500;
+                cursor: pointer;
+                transform: translateY(20px);
+                transition: transform 0.3s ease;
+            }
+
+            .template-card:hover .preview-button {
+                transform: translateY(0);
+            }
+
+            .template-content {
+                padding: 1.25rem;
+            }
+
+            .template-title {
+                font-size: 1.1rem;
+                font-weight: 600;
+                color: #2d3436;
+                margin-bottom: 0.5rem;
+            }
+
+            .template-description {
+                color: #636e72;
+                font-size: 0.9rem;
+                line-height: 1.5;
+                margin-bottom: 1rem;
+            }
+
+            .template-meta {
+                display: flex;
+                justify-content: space-between;
+                align-items: center;
+                font-size: 0.85rem;
+                color: #b2bec3;
+            }
+
+            .template-category {
+                display: flex;
+                align-items: center;
+                gap: 0.5rem;
+            }
+
+            .template-stats {
+                display: flex;
+                align-items: center;
+                gap: 1rem;
+            }
+
+            .stat {
+                display: flex;
+                align-items: center;
+                gap: 0.25rem;
+            }
+        </style>
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    </head>
+    <body>
+    <div class="container">
+        <!-- Sidebar (kept from previous design) -->
+
+        <!-- Main Content -->
+        <main class="main-content">
+            <div class="templates-header">
+                <h1 class="templates-title">Templates</h1>
+                <div class="templates-filters">
+                    <button class="filter-button active">All</button>
+                    <button class="filter-button">Business</button>
+                    <button class="filter-button">Creative</button>
+                    <button class="filter-button">Education</button>
+                    <button class="filter-button">Technology</button>
+                </div>
+                <div class="search-bar">
+                    <i class="fas fa-search search-icon"></i>
+                    <input type="text" class="search-input" placeholder="Search templates...">
+                </div>
+            </div>
+
+            <div class="templates-grid">
+                <!-- Template Card 1 -->
+                <div class="template-card">
+                    <div class="template-preview">
+                        <img src="/api/placeholder/400/320" alt="Business Proposal Template">
+                        <div class="template-overlay">
+                            <button class="preview-button">Preview Template</button>
+                        </div>
+                    </div>
+                    <div class="template-content">
+                        <h3 class="template-title">Business Proposal</h3>
+                        <p class="template-description">Professional template for creating compelling business
+                            proposals.</p>
+                        <div class="template-meta">
+                            <div class="template-category">
+                                <i class="fas fa-briefcase"></i>
+                                Business
+                            </div>
+                            <div class="template-stats">
+                                <div class="stat">
+                                    <i class="fas fa-download"></i>
+                                    2.4k
+                                </div>
+                                <div class="stat">
+                                    <i class="fas fa-star"></i>
+                                    4.8
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Template Card 2 -->
+                <div class="template-card">
+                    <div class="template-preview">
+                        <img src="/api/placeholder/400/320" alt="Social Media Kit">
+                        <div class="template-overlay">
+                            <button class="preview-button">Preview Template</button>
+                        </div>
+                    </div>
+                    <div class="template-content">
+                        <h3 class="template-title">Social Media Kit</h3>
+                        <p class="template-description">Complete toolkit for managing social media content and
+                            campaigns.</p>
+                        <div class="template-meta">
+                            <div class="template-category">
+                                <i class="fas fa-paint-brush"></i>
+                                Creative
+                            </div>
+                            <div class="template-stats">
+                                <div class="stat">
+                                    <i class="fas fa-download"></i>
+                                    3.1k
+                                </div>
+                                <div class="stat">
+                                    <i class="fas fa-star"></i>
+                                    4.9
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Template Card 3 -->
+                <div class="template-card">
+                    <div class="template-preview">
+                        <img src="/api/placeholder/400/320" alt="Course Planner">
+                        <div class="template-overlay">
+                            <button class="preview-button">Preview Template</button>
+                        </div>
+                    </div>
+                    <div class="template-content">
+                        <h3 class="template-title">Course Planner</h3>
+                        <p class="template-description">Educational template for organizing course content and
+                            schedules.</p>
+                        <div class="template-meta">
+                            <div class="template-category">
+                                <i class="fas fa-graduation-cap"></i>
+                                Education
+                            </div>
+                            <div class="template-stats">
+                                <div class="stat">
+                                    <i class="fas fa-download"></i>
+                                    1.8k
+                                </div>
+                                <div class="stat">
+                                    <i class="fas fa-star"></i>
+                                    4.7
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <script>
+        // Filter buttons functionality
+        const filterButtons = document.querySelectorAll('.filter-button');
+        filterButtons.forEach(button => {
+            button.addEventListener('click', () => {
+                // Remove active class from all buttons
+                filterButtons.forEach(btn => btn.classList.remove('active'));
+                // Add active class to clicked button
+                button.classList.add('active');
+            });
+        });
+
+        // Search functionality
+        const searchInput = document.querySelector('.search-input');
+        searchInput.addEventListener('input', (e) => {
+            const searchTerm = e.target.value.toLowerCase();
+            // Add your search logic here
+            console.log('Searching for:', searchTerm);
+        });
+
+        // Template preview functionality
+        const previewButtons = document.querySelectorAll('.preview-button');
+        previewButtons.forEach(button => {
+            button.addEventListener('click', (e) => {
+                e.preventDefault();
+                // Add your preview logic here
+                console.log('Preview template clicked');
+            });
+        });
+    </script>
+    </body>
+    </html>
+{% endblock %}

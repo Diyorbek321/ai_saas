@@ -23,3 +23,9 @@ class Code(TemplateView):
 
 class Settings(TemplateView):
     template_name = 'setting.html'
+
+class Project(TemplateView):
+    template_name = 'project.html'
+
+class Template(TemplateView):
+    template_name = 'template.html'

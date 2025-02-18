@@ -2,74 +2,89 @@
 {% block content %}
     {% include 'parts/sidebar.html' %}
     {% include 'parts/header.html' %}
-    <!DOCTYPE html>
-<html>
+ <!DOCTYPE html>
+<html lang="en">
 <head>
-    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet" />
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Settings Page</title>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
     <style>
-        .settings-container {
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: system-ui, -apple-system, sans-serif;
+        }
+
+        body {
+            background: #f0f2f5;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
             padding: 2rem;
-            background-color: #f8f9fa;
-            min-height: 100vh;
         }
 
-        .settings-header {
+        .header {
+            background: white;
+            padding: 2rem;
+            border-radius: 12px;
             margin-bottom: 2rem;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.1);
         }
 
-        .settings-title {
-            font-size: 1.5rem;
+        .title {
+            font-size: 2rem;
             font-weight: 600;
-            color: #1a1a1a;
             margin-bottom: 0.5rem;
         }
 
-        .settings-subtitle {
+        .subtitle {
             color: #666;
-            font-size: 0.95rem;
         }
 
-        .settings-content {
+        .content {
+            display: grid;
+            grid-template-columns: 300px 1fr;
+            gap: 2rem;
+        }
+
+        .card {
             background: white;
-            border-radius: 0.5rem;
             padding: 2rem;
+            border-radius: 12px;
             box-shadow: 0 1px 3px rgba(0,0,0,0.1);
-            max-width: 800px;
-            margin: 0 auto;
         }
 
         .profile-section {
-            display: flex;
-            gap: 2rem;
-            margin-bottom: 2rem;
-            padding-bottom: 2rem;
-            border-bottom: 1px solid #e5e7eb;
-        }
-
-        .profile-image-container {
-            position: relative;
-            width: 150px;
-            height: 150px;
+            text-align: center;
         }
 
         .profile-image {
-            width: 150px;
-            height: 150px;
+            width: 200px;
+            height: 200px;
             border-radius: 50%;
-            object-fit: cover;
-            border: 3px solid #e5e7eb;
+            margin-bottom: 2rem;
+            border: 4px solid #fff;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
         }
 
-        .image-upload-overlay {
+        .upload-button {
+            position: relative;
+            display: inline-block;
+        }
+
+        .upload-overlay {
             position: absolute;
             bottom: 0;
             right: 0;
-            background: #6366f1;
-            border-radius: 50%;
-            padding: 0.5rem;
-            cursor: pointer;
+            background: #4f46e5;
             color: white;
-            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+            padding: 8px;
+            border-radius: 50%;
+            cursor: pointer;
         }
 
         .form-grid {
@@ -79,34 +94,32 @@
         }
 
         .form-group {
-            margin-bottom: 1.5rem;
+            margin-bottom: 1rem;
         }
 
-        .form-group.full-width {
+        .form-group.full {
             grid-column: 1 / -1;
         }
 
         .form-label {
             display: block;
-            font-size: 0.875rem;
+            margin-bottom: 0.5rem;
             font-weight: 500;
             color: #374151;
-            margin-bottom: 0.5rem;
         }
 
         .form-input {
             width: 100%;
             padding: 0.75rem;
-            border: 1px solid #e5e7eb;
-            border-radius: 0.375rem;
-            font-size: 0.875rem;
-            transition: border-color 0.2s;
+            border: 2px solid #e5e7eb;
+            border-radius: 8px;
+            font-size: 1rem;
+            transition: border-color 0.15s;
         }
 
         .form-input:focus {
-            border-color: #6366f1;
             outline: none;
-            box-shadow: 0 0 0 3px rgba(99, 102, 241, 0.1);
+            border-color: #4f46e5;
         }
 
         .form-input.error {
@@ -115,254 +128,204 @@
 
         .error-message {
             color: #ef4444;
-            font-size: 0.75rem;
-            margin-top: 0.25rem;
+            font-size: 0.875rem;
+            margin-top: 0.5rem;
         }
 
-        .settings-actions {
+        .actions {
             display: flex;
             justify-content: flex-end;
             gap: 1rem;
             margin-top: 2rem;
+            padding-top: 2rem;
+            border-top: 1px solid #e5e7eb;
         }
 
-        .btn {
+        .button {
             padding: 0.75rem 1.5rem;
-            border-radius: 0.375rem;
+            border-radius: 8px;
             font-weight: 500;
-            font-size: 0.875rem;
             cursor: pointer;
-            transition: all 0.2s;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
         }
 
-        .btn-primary {
-            background: #6366f1;
+        .button-primary {
+            background: #4f46e5;
             color: white;
             border: none;
         }
 
-        .btn-primary:hover {
-            background: #4f46e5;
-        }
-
-        .btn-secondary {
+        .button-secondary {
             background: white;
             color: #374151;
-            border: 1px solid #e5e7eb;
+            border: 2px solid #e5e7eb;
         }
 
-        .btn-secondary:hover {
-            background: #f9fafb;
-        }
-
-        .notification {
+        .toast {
             position: fixed;
-            bottom: 1rem;
-            right: 1rem;
-            padding: 1rem;
+            bottom: 2rem;
+            right: 2rem;
             background: white;
-            border-radius: 0.375rem;
-            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+            padding: 1rem 1.5rem;
+            border-radius: 8px;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.1);
             display: flex;
             align-items: center;
-            gap: 0.5rem;
-            animation: slideIn 0.3s ease-out;
+            gap: 0.75rem;
+            border-left: 4px solid #4f46e5;
         }
 
-        @keyframes slideIn {
-            from { transform: translateX(100%); }
-            to { transform: translateX(0); }
+        @media (max-width: 768px) {
+            .content {
+                grid-template-columns: 1fr;
+            }
+
+            .form-grid {
+                grid-template-columns: 1fr;
+            }
         }
     </style>
 </head>
 <body>
-    <div class="settings-container">
-        <div class="settings-header">
-            <h1 class="settings-title">Settings</h1>
-            <p class="settings-subtitle">Manage your profile and preferences</p>
+    <div class="container">
+        <div class="header">
+            <h1 class="title">Account Settings</h1>
+            <p class="subtitle">Manage your profile and preferences</p>
         </div>
 
-        <div class="settings-content">
-            <form id="settingsForm">
-                <div class="profile-section">
-                    <div class="profile-image-container">
-                        <img src="/api/placeholder/150/150" alt="Profile" class="profile-image" id="profileImage">
-                        <label for="imageUpload" class="image-upload-overlay">
-                            <i class="fas fa-camera"></i>
-                        </label>
-                        <input type="file" id="imageUpload" hidden accept="image/*">
-                    </div>
+        <div class="content">
+            <div class="card profile-section">
+                <div class="upload-button">
+                    <img src="/api/placeholder/200/200" alt="Profile" class="profile-image" id="profileImage">
+                    <label for="imageUpload" class="upload-overlay">
+                        <i class="fas fa-camera"></i>
+                    </label>
+                    <input type="file" id="imageUpload" hidden accept="image/*">
                 </div>
+            </div>
 
-                <div class="form-grid">
-                    <div class="form-group">
-                        <label class="form-label" for="firstName">First Name</label>
-                        <input type="text" id="firstName" class="form-input" required>
+            <div class="card">
+                <form id="settingsForm">
+                    <div class="form-grid">
+                        <div class="form-group">
+                            <label class="form-label" for="firstName">First Name</label>
+                            <input type="text" id="firstName" class="form-input" required>
+                        </div>
+
+                        <div class="form-group">
+                            <label class="form-label" for="lastName">Last Name</label>
+                            <input type="text" id="lastName" class="form-input" required>
+                        </div>
+
+                        <div class="form-group">
+                            <label class="form-label" for="email">Email</label>
+                            <input type="email" id="email" class="form-input" required>
+                        </div>
+
+                        <div class="form-group">
+                            <label class="form-label" for="phone">Phone</label>
+                            <input type="tel" id="phone" class="form-input">
+                        </div>
+
+                        <div class="form-group full">
+                            <label class="form-label" for="bio">Bio</label>
+                            <textarea id="bio" class="form-input" rows="4"></textarea>
+                        </div>
+
+                        <div class="form-group">
+                            <label class="form-label" for="location">Location</label>
+                            <input type="text" id="location" class="form-input">
+                        </div>
+
+                        <div class="form-group">
+                            <label class="form-label" for="website">Website</label>
+                            <input type="url" id="website" class="form-input">
+                        </div>
                     </div>
 
-                    <div class="form-group">
-                        <label class="form-label" for="lastName">Last Name</label>
-                        <input type="text" id="lastName" class="form-input" required>
+                    <div class="actions">
+                        <button type="button" class="button button-secondary" id="resetBtn">
+                            <i class="fas fa-undo"></i> Reset
+                        </button>
+                        <button type="submit" class="button button-primary">
+                            <i class="fas fa-save"></i> Save Changes
+                        </button>
                     </div>
-
-                    <div class="form-group">
-                        <label class="form-label" for="email">Email</label>
-                        <input type="email" id="email" class="form-input" required>
-                    </div>
-
-                    <div class="form-group">
-                        <label class="form-label" for="phone">Phone Number</label>
-                        <input type="tel" id="phone" class="form-input">
-                    </div>
-
-                    <div class="form-group">
-                        <label class="form-label" for="birthDate">Birth Date</label>
-                        <input type="date" id="birthDate" class="form-input">
-                    </div>
-
-                    <div class="form-group">
-                        <label class="form-label" for="occupation">Occupation</label>
-                        <input type="text" id="occupation" class="form-input">
-                    </div>
-
-                    <div class="form-group full-width">
-                        <label class="form-label" for="bio">Bio</label>
-                        <textarea id="bio" class="form-input" rows="4"></textarea>
-                    </div>
-
-                    <div class="form-group">
-                        <label class="form-label" for="location">Location</label>
-                        <input type="text" id="location" class="form-input">
-                    </div>
-
-                    <div class="form-group">
-                        <label class="form-label" for="website">Website</label>
-                        <input type="url" id="website" class="form-input">
-                    </div>
-                </div>
-
-                <div class="settings-actions">
-                    <button type="button" class="btn btn-secondary" id="resetBtn">Reset</button>
-                    <button type="submit" class="btn btn-primary">Save Changes</button>
-                </div>
-            </form>
+                </form>
+            </div>
         </div>
     </div>
 
     <script>
-        document.addEventListener('DOMContentLoaded', function() {
+        document.addEventListener('DOMContentLoaded', () => {
             const form = document.getElementById('settingsForm');
             const resetBtn = document.getElementById('resetBtn');
             const imageUpload = document.getElementById('imageUpload');
             const profileImage = document.getElementById('profileImage');
 
-            // Load saved settings if they exist
-            loadSavedSettings();
+            function showToast(message) {
+                const toast = document.createElement('div');
+                toast.className = 'toast';
+                toast.innerHTML = `<i class="fas fa-check-circle"></i>${message}`;
+                document.body.appendChild(toast);
+                setTimeout(() => toast.remove(), 3000);
+            }
 
-            // Image upload handling
-            imageUpload.addEventListener('change', function(e) {
+            function validateForm() {
+                const required = form.querySelectorAll('[required]');
+                let valid = true;
+
+                required.forEach(field => {
+                    if (!field.value.trim()) {
+                        field.classList.add('error');
+                        valid = false;
+                    } else {
+                        field.classList.remove('error');
+                    }
+                });
+
+                return valid;
+            }
+
+            imageUpload.addEventListener('change', (e) => {
                 const file = e.target.files[0];
                 if (file) {
                     const reader = new FileReader();
-                    reader.onload = function(e) {
+                    reader.onload = (e) => {
                         profileImage.src = e.target.result;
-                        // Here you would typically upload the image to your server
-                        showNotification('Profile image updated successfully!', 'success');
+                        showToast('Profile image updated');
                     };
                     reader.readAsDataURL(file);
                 }
             });
 
-            // Form submission
-            form.addEventListener('submit', function(e) {
+            form.addEventListener('submit', (e) => {
                 e.preventDefault();
                 if (validateForm()) {
-                    saveSettings();
-                    showNotification('Settings saved successfully!', 'success');
+                    const data = new FormData(form);
+                    const settings = Object.fromEntries(data);
+                    localStorage.setItem('settings', JSON.stringify(settings));
+                    showToast('Settings saved successfully');
                 }
             });
 
-            // Reset button
-            resetBtn.addEventListener('click', function() {
-                if (confirm('Are you sure you want to reset all changes?')) {
-                    loadSavedSettings();
-                    showNotification('Settings reset to last saved state', 'info');
+            resetBtn.addEventListener('click', () => {
+                if (confirm('Reset all changes?')) {
+                    form.reset();
+                    showToast('Settings reset');
                 }
             });
 
-            function validateForm() {
-                let isValid = true;
-                const requiredFields = form.querySelectorAll('[required]');
-
-                requiredFields.forEach(field => {
-                    if (!field.value.trim()) {
-                        isValid = false;
-                        field.classList.add('error');
-                        showError(field, 'This field is required');
-                    } else {
-                        field.classList.remove('error');
-                        removeError(field);
-                    }
-                });
-
-                // Email validation
-                const email = document.getElementById('email');
-                if (email.value && !isValidEmail(email.value)) {
-                    isValid = false;
-                    email.classList.add('error');
-                    showError(email, 'Please enter a valid email address');
-                }
-
-                return isValid;
-            }
-
-            function isValidEmail(email) {
-                return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
-            }
-
-            function showError(field, message) {
-                removeError(field);
-                const error = document.createElement('div');
-                error.className = 'error-message';
-                error.textContent = message;
-                field.parentNode.appendChild(error);
-            }
-
-            function removeError(field) {
-                const error = field.parentNode.querySelector('.error-message');
-                if (error) {
-                    error.remove();
-                }
-            }
-
-            function saveSettings() {
-                const formData = new FormData(form);
-                const settings = {};
-                formData.forEach((value, key) => {
-                    settings[key] = value;
-                });
-                localStorage.setItem('userSettings', JSON.stringify(settings));
-            }
-
-            function loadSavedSettings() {
-                const settings = JSON.parse(localStorage.getItem('userSettings') || '{}');
-                Object.keys(settings).forEach(key => {
+            // Load saved settings
+            const saved = localStorage.getItem('settings');
+            if (saved) {
+                const settings = JSON.parse(saved);
+                Object.entries(settings).forEach(([key, value]) => {
                     const field = form.querySelector(`#${key}`);
-                    if (field) {
-                        field.value = settings[key];
-                    }
+                    if (field) field.value = value;
                 });
-            }
-
-            function showNotification(message, type) {
-                const notification = document.createElement('div');
-                notification.className = 'notification';
-                notification.innerHTML = `
-                    <i class="fas fa-${type === 'success' ? 'check-circle' : 'info-circle'}"></i>
-                    ${message}
-                `;
-                document.body.appendChild(notification);
-                setTimeout(() => notification.remove(), 3000);
             }
         });
     </script>

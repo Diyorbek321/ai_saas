@@ -1,0 +1,315 @@
+{% extends 'parts/base.html' %}
+{% block content %}
+    {% include 'parts/header.html' %}
+    {% include 'parts/sidebar.html' %}
+    <!DOCTYPE html>
+    <html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <style>
+            * {
+                margin: 0;
+                padding: 0;
+                box-sizing: border-box;
+            }
+
+            body {
+                font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+                background-color: #f8f9fa;
+            }
+
+            .container {
+                display: flex;
+                min-height: 100vh;
+            }
+
+            /* Sidebar Styles */
+            .sidebar {
+                width: 240px;
+                background-color: #ffffff;
+                padding: 1.5rem;
+                border-right: 1px solid #e9ecef;
+                position: fixed;
+                height: 100vh;
+            }
+
+            .logo {
+                display: flex;
+                align-items: center;
+                gap: 0.5rem;
+                color: #6c5ce7;
+                font-weight: 600;
+                font-size: 1.2rem;
+                margin-bottom: 2rem;
+            }
+
+            .nav-section {
+                margin-bottom: 2rem;
+            }
+
+            .nav-title {
+                text-transform: uppercase;
+                color: #6b7280;
+                font-size: 0.75rem;
+                font-weight: 600;
+                margin-bottom: 0.75rem;
+            }
+
+            .nav-items {
+                list-style: none;
+            }
+
+            .nav-item {
+                margin-bottom: 0.5rem;
+            }
+
+            .nav-link {
+                display: flex;
+                align-items: center;
+                gap: 0.75rem;
+                padding: 0.75rem;
+                color: #4b5563;
+                text-decoration: none;
+                border-radius: 0.5rem;
+                transition: all 0.2s;
+            }
+
+            .nav-link:hover {
+                background-color: #f3f4f6;
+            }
+
+            .nav-link.active {
+                background-color: #6c5ce7;
+                color: white;
+            }
+
+            /* Main Content Styles */
+            .main-content {
+                margin-left: 240px;
+                flex-grow: 1;
+                padding: 2rem;
+            }
+
+            .projects-grid {
+                display: grid;
+                grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+                gap: 1.5rem;
+                padding: 1rem;
+            }
+
+            .project-card {
+                background: white;
+                border-radius: 10px;
+                padding: 1.5rem;
+                box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+                transition: transform 0.3s ease, box-shadow 0.3s ease;
+            }
+
+            .project-card:hover {
+                transform: translateY(-3px);
+                box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            }
+
+            .project-header {
+                display: flex;
+                align-items: center;
+                margin-bottom: 1rem;
+            }
+
+            .project-icon {
+                width: 40px;
+                height: 40px;
+                background-color: #6c5ce7;
+                border-radius: 8px;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                margin-right: 1rem;
+            }
+
+            .project-icon i {
+                color: white;
+                font-size: 1.2rem;
+            }
+
+            .project-title {
+                font-size: 1.1rem;
+                font-weight: 600;
+                color: #2d3436;
+                margin: 0;
+            }
+
+            .project-description {
+                color: #636e72;
+                font-size: 0.9rem;
+                line-height: 1.5;
+                margin-bottom: 1rem;
+            }
+
+            .project-tags {
+                display: flex;
+                flex-wrap: wrap;
+                gap: 0.5rem;
+            }
+
+            .project-tag {
+                background-color: #f1f2f6;
+                color: #6c5ce7;
+                padding: 0.25rem 0.75rem;
+                border-radius: 15px;
+                font-size: 0.8rem;
+                font-weight: 500;
+            }
+
+            .add-project-card {
+                border: 2px dashed #b2bec3;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                cursor: pointer;
+                min-height: 200px;
+                background-color: white;
+            }
+
+            .add-project-card:hover {
+                border-color: #6c5ce7;
+                background-color: #f5f6fa;
+            }
+
+            .add-project-button {
+                color: #b2bec3;
+                font-size: 2rem;
+                transition: color 0.3s ease;
+            }
+
+            .add-project-card:hover .add-project-button {
+                color: #6c5ce7;
+            }
+        </style>
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    </head>
+    <body>
+    <div class="container">
+        <!-- Sidebar -->
+{#        <nav class="sidebar">#}
+{#            <div class="logo">#}
+{#                <i class="fas fa-brain"></i>#}
+{#                CreativeAI#}
+{#            </div>#}
+{##}
+{#            <div class="nav-section">#}
+{#                <div class="nav-title">Main</div>#}
+{#                <ul class="nav-items">#}
+{#                    <li class="nav-item">#}
+{#                        <a href="#" class="nav-link">#}
+{#                            <i class="fas fa-home"></i>#}
+{#                            Dashboard#}
+{#                        </a>#}
+{#                    </li>#}
+{#                    <li class="nav-item">#}
+{#                        <a href="#" class="nav-link active">#}
+{#                            <i class="fas fa-project-diagram"></i>#}
+{#                            Projects#}
+{#                        </a>#}
+{#                    </li>#}
+{#                    <li class="nav-item">#}
+{#                        <a href="#" class="nav-link">#}
+{#                            <i class="fas fa-layer-group"></i>#}
+{#                            Templates#}
+{#                        </a>#}
+{#                    </li>#}
+{#                    <li class="nav-item">#}
+{#                        <a href="#" class="nav-link">#}
+{#                            <i class="fas fa-book"></i>#}
+{#                            Resources#}
+{#                        </a>#}
+{#                    </li>#}
+{#                </ul>#}
+{#            </div>#}
+{##}
+{#            <div class="nav-section">#}
+{#                <div class="nav-title">Workspace</div>#}
+{#                <ul class="nav-items">#}
+{#                    <li class="nav-item">#}
+{#                        <a href="#" class="nav-link">#}
+{#                            <i class="fas fa-text-height"></i>#}
+{#                            Text Generator#}
+{#                        </a>#}
+{#                    </li>#}
+{#                    <li class="nav-item">#}
+{#                        <a href="#" class="nav-link">#}
+{#                            <i class="fas fa-image"></i>#}
+{#                            Image Creator#}
+{#                        </a>#}
+{#                    </li>#}
+{#                    <li class="nav-item">#}
+{#                        <a href="#" class="nav-link">#}
+{#                            <i class="fas fa-code"></i>#}
+{#                            Code Assistant#}
+{#                        </a>#}
+{#                    </li>#}
+{#                    <li class="nav-item">#}
+{#                        <a href="#" class="nav-link">#}
+{#                            <i class="fas fa-chart-bar"></i>#}
+{#                            Data Analysis#}
+{#                        </a>#}
+{#                    </li>#}
+{#                </ul>#}
+{#            </div>#}
+{#        </nav>#}
+
+        <!-- Main Content -->
+        <main class="main-content">
+            <div class="projects-grid">
+                <div class="project-card">
+                    <div class="project-header">
+                        <div class="project-icon">
+                            <i class="fas fa-code"></i>
+                        </div>
+                        <h3 class="project-title">Web Development</h3>
+                    </div>
+                    <p class="project-description">
+                        A modern web application built with the latest technologies and best practices.
+                    </p>
+                    <div class="project-tags">
+                        <span class="project-tag">React</span>
+                        <span class="project-tag">Node.js</span>
+                        <span class="project-tag">MongoDB</span>
+                    </div>
+                </div>
+
+                <div class="project-card">
+                    <div class="project-header">
+                        <div class="project-icon">
+                            <i class="fas fa-mobile-alt"></i>
+                        </div>
+                        <h3 class="project-title">Mobile App</h3>
+                    </div>
+                    <p class="project-description">
+                        Cross-platform mobile application with seamless user experience.
+                    </p>
+                    <div class="project-tags">
+                        <span class="project-tag">Flutter</span>
+                        <span class="project-tag">Firebase</span>
+                    </div>
+                </div>
+
+                <div class="project-card add-project-card">
+                    <div class="add-project-button">
+                        <i class="fas fa-plus"></i>
+                    </div>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <script>
+        document.querySelector('.add-project-card').addEventListener('click', () => {
+            // Add your project creation logic here
+            console.log('Add new project clicked');
+        });
+    </script>
+    </body>
+    </html>
+{% endblock %}
