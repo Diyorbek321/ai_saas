@@ -1,0 +1,80 @@
+{% extends 'parts/base.html' %}
+{% block content %}
+    {% include 'parts/header.html' %}
+    {% include 'parts/sidebar.html' %}
+  <!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Support Section</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="bg-gray-100 m-0 p-0 w-screen h-screen overflow-hidden">
+    <div class="flex flex-col w-full h-full">
+        <!-- Header Section -->
+        <header class="w-full bg-blue-600 text-white p-4 text-center text-xl font-bold">Support Center</header>
+
+        <div class="flex w-full h-full">
+            <!-- Sidebar Placeholder -->
+            <aside class="w-64 bg-gray-200 p-4 hidden md:block h-full">
+                <!-- Empty space for Sidebar -->
+            </aside>
+
+            <!-- Support Section -->
+            <main class="flex-1 p-0 h-full">
+                <div class="w-full h-full bg-white p-8 rounded-lg shadow-lg overflow-auto">
+                    <h2 class="text-3xl font-bold text-gray-800 mb-4">Support</h2>
+                    <p class="text-gray-600 mb-6">How can we help you? Fill out the form below or check the FAQs.</p>
+
+                    <!-- Contact Form -->
+                    <form class="space-y-4">
+                        <input type="text" placeholder="Your Name" class="w-full p-3 border rounded-lg">
+                        <input type="email" placeholder="Your Email" class="w-full p-3 border rounded-lg">
+                        <textarea placeholder="Your Message" class="w-full p-3 border rounded-lg h-32"></textarea>
+                        <button class="bg-blue-600 text-white px-6 py-2 rounded-lg hover:bg-blue-700">Submit</button>
+                    </form>
+
+                    <!-- FAQ Section -->
+                    <div class="mt-8">
+                        <h3 class="text-2xl font-bold text-gray-700 mb-4">Frequently Asked Questions</h3>
+                        <div class="space-y-4">
+                            <div class="border-b pb-2">
+                                <button class="w-full text-left font-semibold text-gray-700 flex justify-between" onclick="toggleFAQ(1)">
+                                    How do I contact support?
+                                    <span id="icon1">+</span>
+                                </button>
+                                <p id="faq1" class="hidden text-gray-600 mt-2">You can contact us via the form above or email support@example.com</p>
+                            </div>
+                            <div class="border-b pb-2">
+                                <button class="w-full text-left font-semibold text-gray-700 flex justify-between" onclick="toggleFAQ(2)">
+                                    How long does support take to respond?
+                                    <span id="icon2">+</span>
+                                </button>
+                                <p id="faq2" class="hidden text-gray-600 mt-2">We typically respond within 24-48 hours.</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </main>
+        </div>
+    </div>
+
+    <script>
+        function toggleFAQ(id) {
+            const answer = document.getElementById('faq' + id);
+            const icon = document.getElementById('icon' + id);
+            if (answer.classList.contains('hidden')) {
+                answer.classList.remove('hidden');
+                icon.innerText = '-';
+            } else {
+                answer.classList.add('hidden');
+                icon.innerText = '+';
+            }
+        }
+    </script>
+</body>
+</html>
+
+
+{% endblock %}

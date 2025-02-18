@@ -76,7 +76,7 @@
                     </a>
                 </li>
                 <li class="sidebar-menu-item">
-                    <a href="#" class="sidebar-menu-link">
+                    <a href="{% url 'support' %}" class="sidebar-menu-link">
                         <i class="fas fa-headset sidebar-menu-icon"></i>
                         <span>Support</span>
                     </a>
@@ -88,8 +88,8 @@
         <div class="sidebar-profile">
             <img src="/api/placeholder/40/40" alt="Profile" class="avatar">
             <div class="sidebar-profile-info">
-                <div class="sidebar-profile-name">Alex Morgan</div>
-                <div class="sidebar-profile-email">alex@example.com</div>
+                <div class="sidebar-profile-name">{{ user.username }}</div>
+                <div class="sidebar-profile-email">{{ user.email }}</div>
             </div>
             <div class="sidebar-profile-menu">
                 <i class="fas fa-chevron-down"></i>

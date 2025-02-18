@@ -75,10 +75,16 @@
         .signup-box button:hover {
             background: #003d99;
         }
+        .signup-box label {
+            display: block;
+            text-align: left;
+            font-weight: bold;
+            margin-top: 10px;
+        }
         .signup-box input {
             width: 100%;
             padding: 10px;
-            margin: 10px 0;
+            margin-top: 5px;
             border: 1px solid #ccc;
             border-radius: 5px;
         }
@@ -108,15 +114,28 @@
             <div class="signup-box">
                 <h2>Create an Account</h2>
                 <p>Tell us about yourself? Let's tailor your experience so it best suits you.</p>
+
                 <button onclick="setUserType('business')">Business Owner</button>
                 <button onclick="setUserType('personal')">Personal User</button>
-                <div id="accountDetails" style="display:none; margin-top: 20px;">
-                    <input type="text" placeholder="Full Name">
-                    <input type="email" placeholder="Email">
-                    <input type="password" placeholder="Password">
-                    <input type="password" placeholder="Confirm Password">
-                    <button>Continue</button>
-                </div>
+
+                <form method="post">
+                    {% csrf_token %}
+                    <div id="accountDetails" style="display:none; margin-top: 20px;">
+                        <label for="username">Username</label>
+                        <input type="text" id="username" name="username" placeholder="Enter username" required>
+
+                        <label for="email">Email</label>
+                        <input type="email" id="email" name="email" placeholder="Enter email" required>
+
+                        <label for="password">Password</label>
+                        <input type="password" id="password" name="password" placeholder="Enter password" required>
+
+                        <label for="confirm_password">Confirm Password</label>
+                        <input type="password" id="confirm_password" name="confirm_password" placeholder="Confirm password" required>
+
+                        <button type="submit">Continue</button>
+                    </div>
+                </form>
             </div>
         </div>
         <div class="right-panel">
