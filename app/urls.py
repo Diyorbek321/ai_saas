@@ -4,7 +4,7 @@ from app.views import IndexPageTemplateView, HomePageTemplateView, RegisterView,
     Project, Template, Support, Data,Resources
 
 urlpatterns = [
-    path('index/', IndexPageTemplateView.as_view(), name='index'),
+    path('', IndexPageTemplateView.as_view(), name='index'),
     path('home/', HomePageTemplateView.as_view(), name='home'),
     path('login/', RegisterView.as_view(), name='login'),
     path('text/', TextPage.as_view(), name='text'),

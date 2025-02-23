@@ -1,7 +1,9 @@
 {% extends 'parts/base.html' %}
 {% load static %}
 {% block content %}
+    <body>
     {% include 'parts/sidebar.html' %}
-    {% include 'parts/header.html' %} 
+    {% include 'parts/header.html' %}
     {% include 'parts/main.html' %}
+    </body>
 {% endblock %}

@@ -1,187 +1,364 @@
-  <div class="main-content">
-            <!-- Main Workspace -->
-            <div class="workspace" id="main-workspace">
-                <div class="workspace-header">
-                    <div class="workspace-title">
-                        <i class="fas fa-magic workspace-title-icon"></i>
-                        <span>AI Workspace</span>
-                    </div>
-                    <div class="workspace-actions">
-                        <button class="btn btn-outline">
-                            <i class="fas fa-history"></i>
-                            <span>History</span>
-                        </button>
-                        <button class="btn btn-primary">
-                            <i class="fas fa-save"></i>
-                            <span>Save</span>
-                        </button>
-                    </div>
-                </div>
-                <div class="workspace-tabs">
-                    <div id="#text-generator" class="workspace-tab active" data-tab="text">Text Generator</div>
-                    <div id="#image-creator" class="workspace-tab" data-tab="image">Image Creator</div>
-                    <div class="workspace-tab" data-tab="code">Code Assistant</div>
-                </div>
-                <div class="workspace-content">
-                    <div class="ai-workspace">
-                        <div class="ai-prompt">
+<div class="main-content">
+    <!-- Main Workspace -->
+    <div class="workspace" id="main-workspace">
+        <div class="workspace-header">
+            <div class="workspace-title">
+                <i class="fas fa-magic workspace-title-icon"></i>
+                <span>AI Workspace</span>
+            </div>
+            <div class="workspace-actions">
+                <button class="btn btn-outline">
+                    <i class="fas fa-history"></i>
+                    <span>History</span>
+                </button>
+                <button class="btn btn-primary">
+                    <i class="fas fa-save"></i>
+                    <span>Save</span>
+                </button>
+            </div>
+        </div>
+        <div class="workspace-tabs">
+            <div id="#text-generator" class="workspace-tab active" data-tab="text">Text Generator</div>
+            <div id="#image-creator" class="workspace-tab" data-tab="image">Image Creator</div>
+            <div class="workspace-tab" data-tab="code">Code Assistant</div>
+        </div>
+        <div class="workspace-content">
+            <div class="ai-workspace">
+                <div class="ai-prompt">
                             <textarea class="ai-textarea"
                                       placeholder="Describe what you want to generate..."></textarea>
-                            <div class="ai-actions">
-                                <button class="btn btn-primary ai-generate">
-                                    <i class="fas fa-bolt"></i>
-                                    <span>Generate</span>
-                                </button>
-                                <div class="ai-options">
-                                    <div class="ai-option">
-                                        <span class="ai-option-label">Model:</span>
-                                        <select class="form-control">
-                                            <option>Creative GPT-4</option>
-                                            <option>Standard GPT-3.5</option>
-                                            <option>Fast GPT-3</option>
-                                        </select>
-                                    </div>
-                                    <div class="ai-option">
-                                        <span class="ai-option-label">Length:</span>
-                                        <select class="form-control">
-                                            <option>Short</option>
-                                            <option>Medium</option>
-                                            <option>Long</option>
-                                        </select>
-                                    </div>
-                                </div>
+                    <div class="ai-actions">
+                        <button class="btn btn-primary ai-generate">
+                            <i class="fas fa-bolt"></i>
+                            <span>Generate</span>
+                        </button>
+                        <div class="ai-options">
+                            <div class="ai-option">
+                                <span class="ai-option-label">Model:</span>
+                                <select class="form-control">
+                                    <option>Creative GPT-4</option>
+                                    <option>Standard GPT-3.5</option>
+                                    <option>Fast GPT-3</option>
+                                </select>
+                            </div>
+                            <div class="ai-option">
+                                <span class="ai-option-label">Length:</span>
+                                <select class="form-control">
+                                    <option>Short</option>
+                                    <option>Medium</option>
+                                    <option>Long</option>
+                                </select>
                             </div>
                         </div>
+                    </div>
+                </div>
 
-                        <div class="ai-result">
-                            <div class="ai-result-header">
-                                <div class="ai-result-title">
-                                    <i class="fas fa-robot"></i>
-                                    <span>Generated Output</span>
-                                </div>
-                                <div class="ai-result-actions">
-                                    <div class="ai-result-action">
-                                        <i class="fas fa-copy"></i>
-                                    </div>
-                                    <div class="ai-result-action">
-                                        <i class="fas fa-download"></i>
-                                    </div>
-                                    <div class="ai-result-action">
-                                        <i class="fas fa-redo-alt"></i>
-                                    </div>
-                                </div>
+                <div class="ai-result">
+                    <div class="ai-result-header">
+                        <div class="ai-result-title">
+                            <i class="fas fa-robot"></i>
+                            <span>Generated Output</span>
+                        </div>
+                        <div class="ai-result-actions">
+                            <div class="ai-result-action">
+                                <i class="fas fa-copy"></i>
                             </div>
-                            <div class="ai-result-body">
-                                <p>Your AI-generated content will appear here after you click the Generate button. Try
-                                    describing what you need in detail for the best results!</p>
+                            <div class="ai-result-action">
+                                <i class="fas fa-download"></i>
+                            </div>
+                            <div class="ai-result-action">
+                                <i class="fas fa-redo-alt"></i>
                             </div>
                         </div>
+                    </div>
+                    <div class="ai-result-body">
+                        <p>Your AI-generated content will appear here after you click the Generate button. Try
+                            describing what you need in detail for the best results!</p>
                     </div>
                 </div>
             </div>
+        </div>
+    </div>
 
-            <!-- Recent Projects -->
-            <div class="workspace" style="margin-top: 1.5rem;">
-                <div class="workspace-header">
-                    <div class="workspace-title">
-                        <i class="fas fa-folder workspace-title-icon"></i>
-                        <span>Recent Projects</span>
+    <!-- Recent Projects -->
+    <div class="workspace" style="margin-top: 1.5rem;">
+        <div class="workspace-header">
+            <div class="workspace-title">
+                <i class="fas fa-folder workspace-title-icon"></i>
+                <span>Recent Projects</span>
+            </div>
+            <div class="workspace-actions">
+                <button class="btn btn-outline">
+                    <i class="fas fa-filter"></i>
+                    <span>Filter</span>
+                </button>
+                <button class="btn btn-primary">
+                    <i class="fas fa-plus"></i>
+                    <span>New Project</span>
+                </button>
+            </div>
+        </div>
+        <div class="workspace-content">
+            <div class="projects-grid">
+                <!-- Project Card 1 -->
+                <div class="project-card">
+                    <div class="project-header">
+                        <img src="/api/placeholder/400/140" alt="Project Thumbnail" class="project-thumbnail">
+                        <div class="project-badges">
+                            <span class="badge badge-primary">Article</span>
+                        </div>
+                        <div class="project-actions">
+                            <button class="btn btn-sm btn-outline">
+                                <i class="fas fa-ellipsis-v"></i>
+                            </button>
+                        </div>
                     </div>
-                    <div class="workspace-actions">
-                        <button class="btn btn-outline">
-                            <i class="fas fa-filter"></i>
-                            <span>Filter</span>
-                        </button>
-                        <button class="btn btn-primary">
-                            <i class="fas fa-plus"></i>
-                            <span>New Project</span>
-                        </button>
+                    <div class="project-body">
+                        <h3 class="project-title">Marketing Blog Series</h3>
+                        <p class="project-description">A collection of AI-generated marketing articles focused
+                            on
+                            digital growth strategies for SaaS companies.</p>
+                        <div class="project-meta">
+                            <div class="project-date">
+                                <i class="far fa-calendar-alt"></i>
+                                <span>Updated 2 days ago</span>
+                            </div>
+                            <span class="badge badge-success">Completed</span>
+                        </div>
                     </div>
                 </div>
-                <div class="workspace-content">
-                    <div class="projects-grid">
-                        <!-- Project Card 1 -->
-                        <div class="project-card">
-                            <div class="project-header">
-                                <img src="/api/placeholder/400/140" alt="Project Thumbnail" class="project-thumbnail">
-                                <div class="project-badges">
-                                    <span class="badge badge-primary">Article</span>
-                                </div>
-                                <div class="project-actions">
-                                    <button class="btn btn-sm btn-outline">
-                                        <i class="fas fa-ellipsis-v"></i>
-                                    </button>
-                                </div>
-                            </div>
-                            <div class="project-body">
-                                <h3 class="project-title">Marketing Blog Series</h3>
-                                <p class="project-description">A collection of AI-generated marketing articles focused
-                                    on
-                                    digital growth strategies for SaaS companies.</p>
-                                <div class="project-meta">
-                                    <div class="project-date">
-                                        <i class="far fa-calendar-alt"></i>
-                                        <span>Updated 2 days ago</span>
-                                    </div>
-                                    <span class="badge badge-success">Completed</span>
-                                </div>
-                            </div>
-                        </div>
 
-                        <!-- Project Card 2 -->
-                        <div class="project-card">
-                            <div class="project-header">
-                                <img src="/api/placeholder/400/140" alt="Project Thumbnail" class="project-thumbnail">
-                                <div class="project-badges">
-                                    <span class="badge badge-warning">Images</span>
-                                </div>
-                                <div class="project-actions">
-                                    <button class="btn btn-sm btn-outline">
-                                        <i class="fas fa-ellipsis-v"></i>
-                                    </button>
-                                </div>
-                            </div>
-                            <div class="project-body">
-                                <h3 class="project-title">Product Showcase Visuals</h3>
-                                <p class="project-description">AI-generated product images for the upcoming spring
-                                    collection launch campaign.</p>
-                                <div class="project-meta">
-                                    <div class="project-date">
-                                        <i class="far fa-calendar-alt"></i>
-                                        <span>Updated yesterday</span>
-                                    </div>
-                                    <span class="badge badge-primary">In Progress</span>
-                                </div>
-                            </div>
+                <!-- Project Card 2 -->
+                <div class="project-card">
+                    <div class="project-header">
+                        <img src="/api/placeholder/400/140" alt="Project Thumbnail" class="project-thumbnail">
+                        <div class="project-badges">
+                            <span class="badge badge-warning">Images</span>
                         </div>
+                        <div class="project-actions">
+                            <button class="btn btn-sm btn-outline">
+                                <i class="fas fa-ellipsis-v"></i>
+                            </button>
+                        </div>
+                    </div>
+                    <div class="project-body">
+                        <h3 class="project-title">Product Showcase Visuals</h3>
+                        <p class="project-description">AI-generated product images for the upcoming spring
+                            collection launch campaign.</p>
+                        <div class="project-meta">
+                            <div class="project-date">
+                                <i class="far fa-calendar-alt"></i>
+                                <span>Updated yesterday</span>
+                            </div>
+                            <span class="badge badge-primary">In Progress</span>
+                        </div>
+                    </div>
+                </div>
 
-                        <!-- Project Card 3 -->
-                        <div class="project-card">
-                            <div class="project-header">
-                                <img src="/api/placeholder/400/140" alt="Project Thumbnail" class="project-thumbnail">
-                                <div class="project-badges">
-                                    <span class="badge badge-primary">Code</span>
-                                </div>
-                                <div class="project-actions">
-                                    <button class="btn btn-sm btn-outline">
-                                        <i class="fas fa-ellipsis-v"></i>
-                                    </button>
-                                </div>
+                <!-- Project Card 3 -->
+                <div class="project-card">
+                    <div class="project-header">
+                        <img src="/api/placeholder/400/140" alt="Project Thumbnail" class="project-thumbnail">
+                        <div class="project-badges">
+                            <span class="badge badge-primary">Code</span>
+                        </div>
+                        <div class="project-actions">
+                            <button class="btn btn-sm btn-outline">
+                                <i class="fas fa-ellipsis-v"></i>
+                            </button>
+                        </div>
+                    </div>
+                    <div class="project-body">
+                        <h3 class="project-title">Chatbot Implementation</h3>
+                        <p class="project-description">Custom AI chatbot development for customer support
+                            integration on the main website.</p>
+                        <div class="project-meta">
+                            <div class="project-date">
+                                <i class="far fa-calendar-alt"></i>
+                                <span>Updated 5 days ago</span>
                             </div>
-                            <div class="project-body">
-                                <h3 class="project-title">Chatbot Implementation</h3>
-                                <p class="project-description">Custom AI chatbot development for customer support
-                                    integration on the main website.</p>
-                                <div class="project-meta">
-                                    <div class="project-date">
-                                        <i class="far fa-calendar-alt"></i>
-                                        <span>Updated 5 days ago</span>
-                                    </div>
-                                    <span class="badge badge-primary">In Progress</span>
-                                </div>
-                            </div>
+                            <span class="badge badge-primary">In Progress</span>
                         </div>
                     </div>
                 </div>
             </div>
         </div>
+    </div>
+</div>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/js/all.min.js"></script>
+<script>
+document.addEventListener('DOMContentLoaded', function () {
+    const generateButton = document.querySelector('.ai-generate');
+    const promptTextarea = document.querySelector('.ai-textarea');
+    const resultBody = document.querySelector('.ai-result-body');
+    const modelSelect = document.querySelector('.ai-option:nth-child(1) select');
+    const lengthSelect = document.querySelector('.ai-option:nth-child(2) select');
+    const copyButton = document.querySelector('.copy-btn');
+    const downloadButton = document.querySelector('.download-btn');
+    const regenerateButton = document.querySelector('.regenerate-btn');
+    const tabs = document.querySelectorAll('.workspace-tab');
+
+    // API settings
+    const GEMINI_API_KEY = 'AIzaSyD5Jwi8bNmLzgFGgNmZ8o-ky34cAS7QxNw'; // Your Gemini key
+    const DEEPAI_API_KEY = 'your-deepai-api-key-here'; // Replace with your DeepAI key from deepai.org
+
+    const modelMapping = {
+        'Creative GPT-4': 'gemini-1.5-pro',
+        'Standard GPT-3.5': 'gemini-1.0-pro',
+        'Fast GPT-3': 'gemini-1.0-pro-001'
+    };
+    const lengthMapping = {
+        'Short': 5000,
+        'Medium': 8000,
+        'Long': 15000
+    };
+    let activeTab = 'text';
+
+    // Tab switching
+    tabs.forEach(tab => {
+        tab.addEventListener('click', function () {
+            tabs.forEach(t => t.classList.remove('active'));
+            this.classList.add('active');
+            activeTab = this.getAttribute('data-tab');
+            resultBody.innerHTML = '<p>Enter a prompt and click Generate to see results for ' + this.textContent + '.</p>';
+        });
+    });
+
+    // Generate content based on active tab
+    generateButton.addEventListener('click', async function () {
+        const prompt = promptTextarea.value.trim();
+        if (!prompt) {
+            alert('Please enter a description of what you want to generate.');
+            return;
+        }
+
+        resultBody.innerHTML = '<div class="loading-spinner"><i class="fas fa-spinner fa-spin"></i> Generating...</div>';
+        generateButton.disabled = true;
+
+        try {
+            if (activeTab === 'text') {
+                const modelValue = modelMapping[modelSelect.value] || 'gemini-1.0-pro';
+                const maxTokens = lengthMapping[lengthSelect.value] || 300;
+                const response = await generateText(prompt, modelValue, maxTokens);
+                displayTextResult(response);
+            } else if (activeTab === 'image') {
+                const response = await generateImage(prompt);
+                displayImageResult(response);
+            } else if (activeTab === 'code') {
+                const modelValue = modelMapping[modelSelect.value] || 'gemini-1.0-pro';
+                const maxTokens = lengthMapping[lengthSelect.value] || 300;
+                const response = await generateCode(prompt, modelValue, maxTokens);
+                displayTextResult(response); // Code displays as text for now
+            }
+        } catch (error) {
+            resultBody.innerHTML = '<p>Error: ' + (error.message || 'Failed to generate content. Please try again.') + '</p>';
+        } finally {
+            generateButton.disabled = false;
+        }
+    });
+
+    // Generate text with Gemini API
+    async function generateText(prompt, model, maxTokens) {
+        const endpoint = `https://generativelanguage.googleapis.com/v1beta/models/${model}:generateContent?key=${GEMINI_API_KEY}`;
+        const response = await fetch(endpoint, {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({
+                contents: [{ parts: [{ text: prompt }] }],
+                generationConfig: { maxOutputTokens: maxTokens, temperature: model.includes('gemini-1.5') ? 1.0 : 0.7 }
+            })
+        });
+        if (!response.ok) {
+            const errorData = await response.json();
+            throw new Error(errorData.error?.message || 'Gemini API request failed');
+        }
+        const data = await response.json();
+        return data.candidates[0].content.parts[0].text;
+    }
+
+    // Generate image with DeepAI API
+    async function generateImage(prompt) {
+        const response = await fetch('https://api.deepai.org/api/text2img', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+                'api-key': DEEPAI_API_KEY
+            },
+            body: JSON.stringify({ text: prompt })
+        });
+        if (!response.ok) {
+            const errorData = await response.json();
+            throw new Error(errorData.error?.message || 'DeepAI API request failed');
+        }
+        const data = await response.json();
+        return data.output_url;
+    }
+
+    // Generate code with Gemini API
+    async function generateCode(prompt, model, maxTokens) {
+        const fullPrompt = `Generate a Python code snippet that solves the following problem: ${prompt}. Include comments explaining the code.`;
+        return await generateText(fullPrompt, model, maxTokens);
+    }
+
+    // Display text result
+    function displayTextResult(content) {
+        const formattedContent = content.split('\n\n')
+            .filter(paragraph => paragraph.trim() !== '')
+            .map(paragraph => `<p>${paragraph.replace(/\n/g, '<br>')}</p>`)
+            .join('');
+        resultBody.innerHTML = formattedContent;
+    }
+
+    // Display image result
+    function displayImageResult(imageUrl) {
+        resultBody.innerHTML = `<img src="${imageUrl}" alt="Generated Image" style="max-width: 100%; height: auto;">`;
+    }
+
+    // Copy result
+    copyButton.addEventListener('click', function () {
+        const textToCopy = activeTab === 'image' ? resultBody.querySelector('img')?.src : resultBody.innerText;
+        if (textToCopy) {
+            navigator.clipboard.writeText(textToCopy)
+                .then(() => {
+                    copyButton.innerHTML = '<i class="fas fa-check"></i>';
+                    setTimeout(() => copyButton.innerHTML = '<i class="fas fa-copy"></i>', 2000);
+                })
+                .catch(err => console.error('Failed to copy: ', err));
+        }
+    });
+
+    // Download result
+    downloadButton.addEventListener('click', function () {
+        if (activeTab === 'image') {
+            const imgSrc = resultBody.querySelector('img')?.src;
+            if (imgSrc) {
+                const a = document.createElement('a');
+                a.href = imgSrc;
+                a.download = 'generated-image.jpg';
+                document.body.appendChild(a);
+                a.click();
+                document.body.removeChild(a);
+            }
+        } else {
+            const text = resultBody.innerText;
+            const blob = new Blob([text], { type: 'text/plain' });
+            const url = URL.createObjectURL(blob);
+            const a = document.createElement('a');
+            a.href = url;
+            a.download = `generated-${activeTab}.txt`;
+            document.body.appendChild(a);
+            a.click();
+            document.body.removeChild(a);
+            URL.revokeObjectURL(url);
+        }
+    });
+
+    // Regenerate
+    regenerateButton.addEventListener('click', function () {
+        if (promptTextarea.value.trim()) {
+            generateButton.click();
+        }
+    });
+});
+</script>
