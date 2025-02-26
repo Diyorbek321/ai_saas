@@ -3,160 +3,160 @@
     {% include 'parts/header.html' %}
     {% include 'parts/sidebar.html' %}
     <!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Learning Resources Hub</title>
-    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
-    <style>
-        :root {
-            --primary-color: #2563eb;
-            --secondary-color: #1e40af;
-            --background-light: #f8fafc;
-            --text-dark: #1e293b;
-            --text-light: #64748b;
-        }
+    <html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Learning Resources Hub</title>
+        <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+        <style>
+            :root {
+                --primary-color: #2563eb;
+                --secondary-color: #1e40af;
+                --background-light: #f8fafc;
+                --text-dark: #1e293b;
+                --text-light: #64748b;
+            }
 
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
+            * {
+                margin: 0;
+                padding: 0;
+                box-sizing: border-box;
+            }
 
-        body {
-            font-family: 'Segoe UI', system-ui, sans-serif;
-            line-height: 1.6;
-            background-color: var(--background-light);
-            color: var(--text-dark);
-        }
+            body {
+                font-family: 'Segoe UI', system-ui, sans-serif;
+                line-height: 1.6;
+                background-color: var(--background-light);
+                color: var(--text-dark);
+            }
 
-        .main-content {
-            padding: 2rem;
-        }
+            .main-content {
+                padding: 2rem;
+            }
 
-        .resources-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
-            gap: 1.5rem;
-        }
-
-        .resource-card {
-            background-color: white;
-            border-radius: 12px;
-            padding: 1.5rem;
-            transition: all 0.3s;
-            border: 1px solid #e2e8f0;
-        }
-
-        .resource-card:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 12px 20px rgba(0,0,0,0.1);
-        }
-
-        .resource-icon {
-            width: 48px;
-            height: 48px;
-            background-color: var(--background-light);
-            border-radius: 12px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            margin-bottom: 1rem;
-            color: var(--primary-color);
-        }
-
-        .resource-title {
-            font-size: 1.25rem;
-            font-weight: 600;
-            margin-bottom: 0.5rem;
-            color: var(--text-dark);
-        }
-
-        .resource-description {
-            color: var(--text-light);
-            margin-bottom: 1rem;
-            font-size: 0.95rem;
-        }
-
-        .resource-meta {
-            display: flex;
-            align-items: center;
-            gap: 1rem;
-            font-size: 0.875rem;
-            color: var(--text-light);
-            margin-bottom: 1rem;
-        }
-
-        .resource-link {
-            display: inline-flex;
-            align-items: center;
-            gap: 0.5rem;
-            padding: 0.75rem 1.5rem;
-            background-color: var(--primary-color);
-            color: white;
-            text-decoration: none;
-            border-radius: 8px;
-            transition: background-color 0.2s;
-            font-weight: 500;
-        }
-
-        .resource-link:hover {
-            background-color: var(--secondary-color);
-        }
-
-        .badge {
-            padding: 0.25rem 0.75rem;
-            border-radius: 999px;
-            font-size: 0.75rem;
-            font-weight: 500;
-        }
-
-        .badge-article {
-            background-color: #e0f2fe;
-            color: #0369a1;
-        }
-
-        .badge-video {
-            background-color: #fef3c7;
-            color: #92400e;
-        }
-
-        .badge-tool {
-            background-color: #f1f5f9;
-            color: #475569;
-        }
-
-        .category-filter {
-            margin: 0 0 2rem 0;
-            padding: 0.75rem;
-            width: 200px;
-            border: 1px solid #e2e8f0;
-            border-radius: 8px;
-            background-color: white;
-            outline: none;
-        }
-
-        @media (max-width: 768px) {
             .resources-grid {
-                grid-template-columns: 1fr;
+                display: grid;
+                grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+                gap: 1.5rem;
+            }
+
+            .resource-card {
+                background-color: white;
+                border-radius: 12px;
+                padding: 1.5rem;
+                transition: all 0.3s;
+                border: 1px solid #e2e8f0;
+            }
+
+            .resource-card:hover {
+                transform: translateY(-5px);
+                box-shadow: 0 12px 20px rgba(0, 0, 0, 0.1);
+            }
+
+            .resource-icon {
+                width: 48px;
+                height: 48px;
+                background-color: var(--background-light);
+                border-radius: 12px;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                margin-bottom: 1rem;
+                color: var(--primary-color);
+            }
+
+            .resource-title {
+                font-size: 1.25rem;
+                font-weight: 600;
+                margin-bottom: 0.5rem;
+                color: var(--text-dark);
+            }
+
+            .resource-description {
+                color: var(--text-light);
+                margin-bottom: 1rem;
+                font-size: 0.95rem;
+            }
+
+            .resource-meta {
+                display: flex;
+                align-items: center;
+                gap: 1rem;
+                font-size: 0.875rem;
+                color: var(--text-light);
+                margin-bottom: 1rem;
+            }
+
+            .resource-link {
+                display: inline-flex;
+                align-items: center;
+                gap: 0.5rem;
+                padding: 0.75rem 1.5rem;
+                background-color: var(--primary-color);
+                color: white;
+                text-decoration: none;
+                border-radius: 8px;
+                transition: background-color 0.2s;
+                font-weight: 500;
+            }
+
+            .resource-link:hover {
+                background-color: var(--secondary-color);
+            }
+
+            .badge {
+                padding: 0.25rem 0.75rem;
+                border-radius: 999px;
+                font-size: 0.75rem;
+                font-weight: 500;
+            }
+
+            .badge-article {
+                background-color: #e0f2fe;
+                color: #0369a1;
+            }
+
+            .badge-video {
+                background-color: #fef3c7;
+                color: #92400e;
+            }
+
+            .badge-tool {
+                background-color: #f1f5f9;
+                color: #475569;
             }
 
             .category-filter {
-                width: 100%;
+                margin: 0 0 2rem 0;
+                padding: 0.75rem;
+                width: 200px;
+                border: 1px solid #e2e8f0;
+                border-radius: 8px;
+                background-color: white;
+                outline: none;
             }
-        }
-    </style>
-</head>
-<body>
-<br>
+
+            @media (max-width: 768px) {
+                .resources-grid {
+                    grid-template-columns: 1fr;
+                }
+
+                .category-filter {
+                    width: 100%;
+                }
+            }
+        </style>
+    </head>
+    <body>
+    <br>
     <main class="main-content">
         <label for="categoryFilter"></label><select class="category-filter" id="categoryFilter">
-            <option value="all">All Categories</option>
-            <option value="articles">Articles</option>
-            <option value="videos">Videos</option>
-            <option value="tools">Tools</option>
-        </select>
+        <option value="all">All Categories</option>
+        <option value="articles">Articles</option>
+        <option value="videos">Videos</option>
+        <option value="tools">Tools</option>
+    </select>
 
         <div id="resourcesContainer" class="resources-grid">
             <!-- Resource cards will be dynamically added here -->
@@ -250,6 +250,6 @@
         // Initial display
         displayResources();
     </script>
-</body>
-</html>
+    </body>
+    </html>
 {% endblock %}
