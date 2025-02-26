@@ -1,7 +1,7 @@
 from django import urls
 from django.urls import path
 from app.views import IndexPageTemplateView, HomePageTemplateView, RegisterView, TextPage, Image, Code, Settings, \
-    Project, Template, Support, Data,Resources
+    Project, Template, Support, Data,Resources,ProjectDetail,REsourcesDetail
 
 urlpatterns = [
     path('', IndexPageTemplateView.as_view(), name='index'),
@@ -15,5 +15,7 @@ urlpatterns = [
     path('template/', Template.as_view(), name='template'),
     path('support/', Support.as_view(), name='support'),
     path('data/', Data.as_view(), name='data'),
-    path('resources/',Resources.as_view(),name='resources')
+    path('resources/',Resources.as_view(),name='resources'),
+    path('project-detail/',ProjectDetail.as_view(),name='project_detail'),
+    path('resources-detail/',REsourcesDetail.as_view(),name='resourcesdeatil')
 ]

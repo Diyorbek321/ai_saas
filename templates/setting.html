@@ -1,67 +1,151 @@
 {% extends 'parts/base.html' %}
+{% load static %}
 {% block content %}
-    {% include 'parts/sidebar.html' %}
-    {% include 'parts/header.html' %}
- <!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Settings Page</title>
-    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+<body class="dashboard-body">
+
+
+    <!-- Main Container -->
+    <div class="container-fluid dashboard-container">
+        <div class="row">
+            <!-- Sidebar -->
+         {% include 'parts/sidebar.html' %}
+
+            <!-- Main Content -->
+            <main class="col-md-10 ml-sm-auto px-4 dashboard-main">
+                <!-- Header -->
+                <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
+                    <h1 class="h2">Account Settings</h1>
+                    <div class="btn-toolbar mb-2 mb-md-0">
+                        <button type="button" class="btn btn-sm btn-outline-secondary dropdown-toggle">
+                            <i class="fas fa-ellipsis-v"></i>
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Tabs Content -->
+                <div class="tab-content">
+                    <!-- Profile Tab (Default) -->
+                    <div class="tab-pane fade show active" id="profile">
+                        <div class="content">
+                            <div class="card profile-section">
+                                <div class="upload-button">
+                                    <img src="{% static 'img/default-profile.jpg' %}" alt="Profile" class="profile-image" id="profileImage">
+                                    <label for="imageUpload" class="upload-overlay">
+                                        <i class="fas fa-camera"></i>
+                                    </label>
+                                    <input type="file" id="imageUpload" hidden accept="image/*">
+                                </div>
+                            </div>
+
+                            <div class="card">
+                                <form id="settingsForm">
+                                    <div class="form-grid">
+                                        <div class="form-group">
+                                            <label class="form-label" for="firstName">First Name</label>
+                                            <input type="text" id="firstName" class="form-input" value="{% if user.first_name %}{{ user.first_name }}{% endif %}" required>
+                                        </div>
+
+                                        <div class="form-group">
+                                            <label class="form-label" for="lastName">Last Name</label>
+                                            <input type="text" id="lastName" class="form-input" value="{% if user.last_name %}{{ user.last_name }}{% endif %}" required>
+                                        </div>
+
+                                        <div class="form-group">
+                                            <label class="form-label" for="email">Email</label>
+                                            <input type="email" id="email" class="form-input" value="{{ user.email }}" required>
+                                        </div>
+
+                                        <div class="form-group">
+                                            <label class="form-label" for="phone">Phone</label>
+                                            <input type="tel" id="phone" class="form-input" value="{% if user.phone_number %}{{ user.phone_number }}{% endif %}">
+                                        </div>
+
+                                        <div class="form-group full">
+                                            <label class="form-label" for="bio">Bio</label>
+                                            <textarea id="bio" class="form-input" rows="4"></textarea>
+                                        </div>
+
+                                        <div class="form-group">
+                                            <label class="form-label" for="location">Location</label>
+                                            <input type="text" id="location" class="form-input">
+                                        </div>
+
+                                        <div class="form-group">
+                                            <label class="form-label" for="website">Website</label>
+                                            <input type="url" id="website" class="form-input">
+                                        </div>
+                                    </div>
+
+                                    <div class="actions">
+                                        <button type="button" class="button button-secondary" id="resetBtn">
+                                            <i class="fas fa-undo"></i> Reset
+                                        </button>
+                                        <button type="submit" class="button button-primary">
+                                            <i class="fas fa-save"></i> Save Changes
+                                        </button>
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+
+
+                </div>
+            </main>
+        </div>
+    </div>
+
+    <!-- CSS -->
     <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-            font-family: system-ui, -apple-system, sans-serif;
-        }
-
-        body {
+        .dashboard-body {
             background: #f0f2f5;
+            font-family: 'Segoe UI', sans-serif;
         }
-
-        .container {
-            max-width: 1200px;
-            margin: 0 auto;
-            padding: 2rem;
+        .dashboard-container {
+            padding-top: 20px;
         }
-
-        .header {
-            background: white;
-            padding: 2rem;
-            border-radius: 12px;
-            margin-bottom: 2rem;
-            box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+        .sidebar {
+            height: 100vh;
+            position: fixed;
+            top: 0;
+            left: 0;
+            padding: 20px 0;
+            z-index: 100;
+            box-shadow: 2px 0 5px rgba(0, 0, 0, 0.1);
         }
-
-        .title {
-            font-size: 2rem;
-            font-weight: 600;
-            margin-bottom: 0.5rem;
+        .sidebar-sticky {
+            position: -webkit-sticky;
+            position: sticky;
+            top: 20px;
         }
-
-        .subtitle {
-            color: #666;
+        .sidebar .nav-link {
+            color: #4a5568;
+            padding: 10px 20px;
+            font-size: 14px;
+            border-radius: 0;
         }
-
+        .sidebar .nav-link.active, .sidebar .nav-link:hover {
+            color: #2d3748;
+            background: #edf2f7;
+        }
+        .dashboard-main {
+            margin-left: 240px;
+            padding: 20px;
+        }
         .content {
             display: grid;
-            grid-template-columns: 300px 1fr;
+            grid-template-columns: 1fr;
             gap: 2rem;
         }
-
         .card {
             background: white;
             padding: 2rem;
             border-radius: 12px;
             box-shadow: 0 1px 3px rgba(0,0,0,0.1);
         }
-
         .profile-section {
             text-align: center;
         }
-
         .profile-image {
             width: 200px;
             height: 200px;
@@ -70,12 +154,10 @@
             border: 4px solid #fff;
             box-shadow: 0 2px 8px rgba(0,0,0,0.1);
         }
-
         .upload-button {
             position: relative;
             display: inline-block;
         }
-
         .upload-overlay {
             position: absolute;
             bottom: 0;
@@ -86,28 +168,23 @@
             border-radius: 50%;
             cursor: pointer;
         }
-
         .form-grid {
             display: grid;
             grid-template-columns: 1fr 1fr;
             gap: 1.5rem;
         }
-
         .form-group {
             margin-bottom: 1rem;
         }
-
         .form-group.full {
             grid-column: 1 / -1;
         }
-
         .form-label {
             display: block;
             margin-bottom: 0.5rem;
             font-weight: 500;
             color: #374151;
         }
-
         .form-input {
             width: 100%;
             padding: 0.75rem;
@@ -116,22 +193,18 @@
             font-size: 1rem;
             transition: border-color 0.15s;
         }
-
         .form-input:focus {
             outline: none;
             border-color: #4f46e5;
         }
-
         .form-input.error {
             border-color: #ef4444;
         }
-
         .error-message {
             color: #ef4444;
             font-size: 0.875rem;
             margin-top: 0.5rem;
         }
-
         .actions {
             display: flex;
             justify-content: flex-end;
@@ -140,7 +213,6 @@
             padding-top: 2rem;
             border-top: 1px solid #e5e7eb;
         }
-
         .button {
             padding: 0.75rem 1.5rem;
             border-radius: 8px;
@@ -150,19 +222,16 @@
             align-items: center;
             gap: 0.5rem;
         }
-
         .button-primary {
             background: #4f46e5;
             color: white;
             border: none;
         }
-
         .button-secondary {
             background: white;
             color: #374151;
             border: 2px solid #e5e7eb;
         }
-
         .toast {
             position: fixed;
             bottom: 2rem;
@@ -178,86 +247,16 @@
         }
 
         @media (max-width: 768px) {
-            .content {
-                grid-template-columns: 1fr;
-            }
-
-            .form-grid {
-                grid-template-columns: 1fr;
-            }
+            .sidebar { display: none; }
+            .dashboard-main { margin-left: 0; }
+            .content { grid-template-columns: 1fr; }
+            .form-grid { grid-template-columns: 1fr; }
         }
     </style>
-</head>
-<body>
-    <div class="container">
-        <div class="header">
-            <h1 class="title">Account Settings</h1>
-            <p class="subtitle">Manage your profile and preferences</p>
-        </div>
 
-        <div class="content">
-            <div class="card profile-section">
-                <div class="upload-button">
-                    <img src="/api/placeholder/200/200" alt="Profile" class="profile-image" id="profileImage">
-                    <label for="imageUpload" class="upload-overlay">
-                        <i class="fas fa-camera"></i>
-                    </label>
-                    <input type="file" id="imageUpload" hidden accept="image/*">
-                </div>
-            </div>
-
-            <div class="card">
-                <form id="settingsForm">
-                    <div class="form-grid">
-                        <div class="form-group">
-                            <label class="form-label" for="firstName">First Name</label>
-                            <input type="text" id="firstName" class="form-input" required>
-                        </div>
-
-                        <div class="form-group">
-                            <label class="form-label" for="lastName">Last Name</label>
-                            <input type="text" id="lastName" class="form-input" required>
-                        </div>
-
-                        <div class="form-group">
-                            <label class="form-label" for="email">Email</label>
-                            <input type="email" id="email" class="form-input" required>
-                        </div>
-
-                        <div class="form-group">
-                            <label class="form-label" for="phone">Phone</label>
-                            <input type="tel" id="phone" class="form-input">
-                        </div>
-
-                        <div class="form-group full">
-                            <label class="form-label" for="bio">Bio</label>
-                            <textarea id="bio" class="form-input" rows="4"></textarea>
-                        </div>
-
-                        <div class="form-group">
-                            <label class="form-label" for="location">Location</label>
-                            <input type="text" id="location" class="form-input">
-                        </div>
-
-                        <div class="form-group">
-                            <label class="form-label" for="website">Website</label>
-                            <input type="url" id="website" class="form-input">
-                        </div>
-                    </div>
-
-                    <div class="actions">
-                        <button type="button" class="button button-secondary" id="resetBtn">
-                            <i class="fas fa-undo"></i> Reset
-                        </button>
-                        <button type="submit" class="button button-primary">
-                            <i class="fas fa-save"></i> Save Changes
-                        </button>
-                    </div>
-                </form>
-            </div>
-        </div>
-    </div>
-
+    <!-- JavaScript -->
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.0/dist/js/bootstrap.bundle.min.js"></script>
     <script>
         document.addEventListener('DOMContentLoaded', () => {
             const form = document.getElementById('settingsForm');
@@ -318,6 +317,15 @@
                 }
             });
 
+            // Tab navigation
+            $('.nav-link').on('click', function (e) {
+                e.preventDefault();
+                $('.nav-link').removeClass('active');
+                $(this).addClass('active');
+                $('.tab-pane').removeClass('show active');
+                $($(this).data('target')).addClass('show active');
+            });
+
             // Load saved settings
             const saved = localStorage.getItem('settings');
             if (saved) {
@@ -329,6 +337,8 @@
             }
         });
     </script>
+
+    <!-- Font Awesome for Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
 </body>
-</html>
 {% endblock %}

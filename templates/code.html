@@ -262,6 +262,10 @@ Example: Create a function that finds the largest number in an array"></textarea
                         <i class="fas fa-code"></i>
                         C++
                     </div>
+                    <div class="language-option">
+                        <i class="fas fa-code"></i>
+                        Arduino
+                    </div>
                 </div>
                 <button class="generate-btn" id="generateBtn">
                     <i class="fas fa-code"></i>
@@ -341,7 +345,8 @@ document.addEventListener('DOMContentLoaded', function() {
             javascript: '.js',
             java: '.java',
             php: '.php',
-            cpp: '.cpp'
+            cpp: '.cpp',
+            arduino: '.ino'
         };
         return extensions[language] || '.txt';
     }
@@ -376,7 +381,7 @@ document.addEventListener('DOMContentLoaded', function() {
                         }
                     ],
                     generationConfig: {
-                        maxOutputTokens: 500,
+                        maxOutputTokens: 32000,  // Increase to allow longer responses (max for gemini-1.5-pro)
                         temperature: 0.7
                     }
                 })
@@ -397,29 +402,62 @@ document.addEventListener('DOMContentLoaded', function() {
         }
     }
 
-    // Generate code
+    // Generate code (longer and more functional)
     async function generateCode(prompt, language) {
-        const fullPrompt = `Generate a ${language} code snippet that solves the following problem: ${prompt}. Include comments explaining the code. Provide only the code with comments, no additional explanations outside the code block.`;
+        const fullPrompt = `
+            Generate a comprehensive, production-ready ${language} application that solves the following problem: ${prompt}. Include:
+
+            1. Multiple functions or classes for modularity (e.g., at least 3 functions/classes).
+            2. Error handling (try-except/try-catch for edge cases like invalid inputs).
+            3. Input validation and sanitization.
+            4. Performance optimizations (e.g., caching where applicable).
+            5. Comments explaining each component, including purpose, parameters, and returns.
+            6. Integration with a simple in-memory database or file system (if relevant).
+            7. Example usage or a main() function to demonstrate functionality.
+
+            Provide only the code with comments, no additional explanations outside the code block. Make the code approximately 200-300 lines long to ensure it's detailed and functional.
+        `;
         const code = await callGeminiAPI(fullPrompt);
         lastGeneratedCode = code; // Store for tests/docs context
         return code;
     }
 
-    // Generate tests
+    // Generate tests (more comprehensive)
     async function generateTests(language) {
         if (!lastGeneratedCode) {
             return '// Generate code first to create tests';
         }
-        const fullPrompt = `Given this ${language} code:\n\n${lastGeneratedCode}\n\nGenerate test cases in ${language} to verify its functionality. Include at least 3 test cases (normal, edge, and error cases). Provide only the test code, no additional explanations outside the code block.`;
+        const fullPrompt = `
+            Given this ${language} code:\n\n${lastGeneratedCode}\n\nGenerate comprehensive test cases in ${language} using a testing framework (e.g., unittest for Python, Jest for JavaScript). Include:
+
+            1. At least 5 test cases covering normal, edge, and error scenarios.
+            2. Tests for each function/class, including input validation and performance edge cases.
+            3. Mock data or fixtures for realistic testing.
+            4. Assertions to verify expected outputs.
+
+            Provide only the test code, no additional explanations outside the code block. Aim for 100-150 lines of test code.
+        `;
         return await callGeminiAPI(fullPrompt);
     }
 
-    // Generate documentation
+    // Generate documentation (more detailed)
     async function generateDocumentation(language) {
         if (!lastGeneratedCode) {
             return '# Generate code first to create documentation';
         }
-        const fullPrompt = `Given this ${language} code:\n\n${lastGeneratedCode}\n\nGenerate markdown documentation including an overview, parameters, returns, examples, error handling, and performance notes. Provide only the markdown content, no additional explanations outside the block.`;
+        const fullPrompt = `
+            Given this ${language} code:\n\n${lastGeneratedCode}\n\nGenerate detailed markdown documentation including:
+
+            1. Overview of the application/system.
+            2. Detailed description of each function/class (purpose, parameters, return values, exceptions).
+            3. Usage examples with sample inputs/outputs.
+            4. Error handling strategies.
+            5. Performance considerations and optimization notes.
+            6. Installation instructions (if applicable).
+            7. Contribution guidelines for developers.
+
+            Provide only the markdown content, no additional explanations outside the block. Aim for 300-500 lines of markdown for comprehensive documentation.
+        `;
         return await callGeminiAPI(fullPrompt);
     }
 
@@ -439,47 +477,103 @@ document.addEventListener('DOMContentLoaded', function() {
         }
     }
 
-    // Language selection
+    // Language selection functionality
     languageOptions.forEach(option => {
         option.addEventListener('click', function() {
+            // Remove active class from all options
             languageOptions.forEach(opt => opt.classList.remove('active'));
+            // Add active class to clicked option
             this.classList.add('active');
-            currentLanguage = this.textContent.trim().toLowerCase();
-            if (promptInput.value.trim()) {
-                generateBtn.click();
+            // Update current language
+            const langText = this.textContent.trim();
+            currentLanguage = langText.toLowerCase();
+
+            // Update code highlighting if there's already generated code
+            if (lastGeneratedCode) {
+                highlightCode(codeEditor, currentLanguage);
             }
         });
     });
 
-    // Tab switching with Gemini integration
-    tabs.forEach(tab => {
+    // Tab switching functionality
+    tabs.forEach((tab, index) => {
         tab.addEventListener('click', async function() {
+            // Remove active class from all tabs
             tabs.forEach(t => t.classList.remove('active'));
+            // Add active class to clicked tab
             this.classList.add('active');
-            const tabName = this.textContent.trim().toLowerCase();
+
+            generateBtn.disabled = true;
+            generateBtn.innerHTML = `
+                <i class="fas fa-spinner loading-spinner"></i>
+                Generating...
+            `;
 
             try {
-                if (tabName === 'tests') {
-                    const testCode = await generateTests(currentLanguage);
-                    codeEditor.textContent = testCode;
+                let content = '';
+
+                // Handle different tabs
+                if (index === 0) { // Code tab
+                    content = lastGeneratedCode || '// Click "Generate Code" to create code';
                     highlightCode(codeEditor, currentLanguage);
-                } else if (tabName === 'documentation') {
-                    const docs = await generateDocumentation(currentLanguage);
-                    codeEditor.textContent = docs;
+                } else if (index === 1) { // Tests tab
+                    content = await generateTests(currentLanguage);
+                    highlightCode(codeEditor, currentLanguage);
+                } else if (index === 2) { // Documentation tab
+                    content = await generateDocumentation(currentLanguage);
                     highlightCode(codeEditor, 'markdown');
-                } else {
-                    // "Code" tab handled by generateBtn
-                    if (lastGeneratedCode) {
-                        codeEditor.textContent = lastGeneratedCode;
-                        highlightCode(codeEditor, currentLanguage);
-                    }
                 }
+
+                codeEditor.textContent = content;
+                highlightCode(codeEditor, index === 2 ? 'markdown' : currentLanguage);
             } catch (error) {
                 codeEditor.textContent = `Error: ${error.message || 'Failed to generate content'}`;
                 highlightCode(codeEditor, 'text');
-                showNotification(`Failed to generate ${tabName}`, 'error');
+                showNotification('Failed to generate content', 'error');
+            } finally {
+                generateBtn.disabled = false;
+                generateBtn.innerHTML = `
+                    <i class="fas fa-code"></i>
+                    Generate Code
+                `;
             }
         });
+    });
+
+    // Copy button functionality
+    copyBtn.addEventListener('click', function() {
+        const textToCopy = codeEditor.textContent;
+        navigator.clipboard.writeText(textToCopy)
+            .then(() => {
+                showNotification('Code copied to clipboard!', 'success');
+            })
+            .catch(err => {
+                showNotification('Failed to copy code', 'error');
+                console.error('Could not copy text: ', err);
+            });
+    });
+
+    // Download button functionality
+    downloadBtn.addEventListener('click', function() {
+        const textToDownload = codeEditor.textContent;
+        const filename = `generated-code${getFileExtension(currentLanguage)}`;
+
+        const blob = new Blob([textToDownload], { type: 'text/plain' });
+        const url = URL.createObjectURL(blob);
+
+        const a = document.createElement('a');
+        a.href = url;
+        a.download = filename;
+        document.body.appendChild(a);
+        a.click();
+
+        // Clean up
+        setTimeout(() => {
+            document.body.removeChild(a);
+            URL.revokeObjectURL(url);
+        }, 100);
+
+        showNotification(`Downloaded as ${filename}`, 'success');
     });
 
     // Generate button handling (for "Code" tab)
@@ -514,26 +608,6 @@ document.addEventListener('DOMContentLoaded', function() {
                 Generate Code
             `;
         }
-    });
-
-    // Copy button handling
-    copyBtn.addEventListener('click', function() {
-        navigator.clipboard.writeText(codeEditor.textContent)
-            .then(() => showNotification('Code copied to clipboard!', 'success'))
-            .catch(() => showNotification('Failed to copy code', 'error'));
-    });
-
-    // Download button handling
-    downloadBtn.addEventListener('click', function() {
-        const extension = getFileExtension(currentLanguage);
-        const blob = new Blob([codeEditor.textContent], { type: 'text/plain' });
-        const url = window.URL.createObjectURL(blob);
-        const a = document.createElement('a');
-        a.href = url;
-        a.download = `generated_${tabs.find(t => t.classList.contains('active')).textContent.toLowerCase()}${extension}`;
-        a.click();
-        window.URL.revokeObjectURL(url);
-        showNotification('Content downloaded!', 'success');
     });
 });
 </script>

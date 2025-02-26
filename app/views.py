@@ -10,7 +10,7 @@ from django.utils.decorators import method_decorator
 # Create your views here.
 class IndexPageTemplateView(TemplateView):
     template_name = 'index.html'
-@method_decorator(login_required, name='dispatch')
+# @method_decorator(login_required, name='dispatch')
 class HomePageTemplateView(TemplateView):
     template_name = 'dashboard.html'
 
@@ -55,3 +55,9 @@ class Data(TemplateView):
 
 class Resources(TemplateView):
     template_name = 'resources.html'
+
+class ProjectDetail(TemplateView):
+    template_name = 'project_detail.html'
+
+class REsourcesDetail(TemplateView):
+    template_name = 'resorces-detail.html'

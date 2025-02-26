@@ -1,0 +1,452 @@
+{% extends 'parts/base.html' %}
+{% block content %}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Project Detail - CreativeAI</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        body {
+            display: flex;
+            min-height: 100vh;
+            background-color: #f5f5f7;
+        }
+
+
+
+        .logo {
+            display: flex;
+            align-items: center;
+            padding: 0 20px 20px;
+            font-size: 18px;
+            font-weight: 600;
+            color: #7c4dff;
+        }
+
+        .logo-icon {
+            width: 24px;
+            height: 24px;
+            border-radius: 6px;
+            background-color: #7c4dff;
+            margin-right: 10px;
+        }
+
+        .menu-section {
+            margin-bottom: 20px;
+        }
+
+        .menu-title {
+            font-size: 12px;
+            font-weight: 600;
+            color: #888;
+            padding: 10px 20px;
+            text-transform: uppercase;
+        }
+
+        .menu-item {
+            display: flex;
+            align-items: center;
+            padding: 10px 20px;
+            color: #555;
+            cursor: pointer;
+            text-decoration: none;
+        }
+
+        .menu-item.active {
+            background-color: #f0eaff;
+            color: #7c4dff;
+            border-left: 3px solid #7c4dff;
+        }
+
+        .menu-item i {
+            margin-right: 10px;
+            font-size: 18px;
+        }
+
+        /* Main Content Area */
+        .main-content {
+            flex: 1;
+            padding: 20px;
+            display: flex;
+            flex-direction: column;
+        }
+
+        /* Header */
+        .header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 30px;
+        }
+
+        .search-bar {
+            display: flex;
+            align-items: center;
+            background-color: #fff;
+            border-radius: 8px;
+            padding: 8px 15px;
+            width: 300px;
+            border: 1px solid #e1e1e1;
+        }
+
+        .search-bar input {
+            border: none;
+            outline: none;
+            background: transparent;
+            width: 100%;
+            margin-left: 10px;
+        }
+
+        .user-actions {
+            display: flex;
+            align-items: center;
+        }
+
+        .icon-button {
+            width: 36px;
+            height: 36px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background-color: #fff;
+            margin-left: 10px;
+            cursor: pointer;
+            border: 1px solid #e1e1e1;
+            position: relative;
+        }
+
+        .notification-badge {
+            position: absolute;
+            top: -5px;
+            right: -5px;
+            width: 18px;
+            height: 18px;
+            background-color: #ff4d4f;
+            border-radius: 50%;
+            color: white;
+            font-size: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        /* Project Detail */
+        .project-detail {
+            background-color: white;
+            border-radius: 10px;
+            padding: 20px;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+            flex: 1;
+        }
+
+        .project-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+        }
+
+        .project-title {
+            font-size: 20px;
+            font-weight: 600;
+        }
+
+        .action-buttons {
+            display: flex;
+        }
+
+        .btn {
+            padding: 8px 15px;
+            margin-left: 10px;
+            border-radius: 6px;
+            font-weight: 500;
+            cursor: pointer;
+        }
+
+        .btn-primary {
+            background-color: #7c4dff;
+            color: white;
+            border: none;
+        }
+
+        .btn-outline {
+            background-color: transparent;
+            color: #555;
+            border: 1px solid #ddd;
+        }
+
+        .project-info {
+            display: flex;
+            margin-bottom: 30px;
+        }
+
+        .info-card {
+            flex: 1;
+            background-color: #f9f9f9;
+            padding: 15px;
+            border-radius: 8px;
+            margin-right: 15px;
+        }
+
+        .info-card:last-child {
+            margin-right: 0;
+        }
+
+        .card-label {
+            font-size: 12px;
+            color: #888;
+            margin-bottom: 5px;
+        }
+
+        .card-value {
+            font-size: 18px;
+            font-weight: 600;
+            color: #333;
+        }
+
+        .project-content {
+            display: flex;
+        }
+
+        .content-main {
+            flex: 3;
+            margin-right: 20px;
+        }
+
+        .content-sidebar {
+            flex: 1;
+            background-color: #f9f9f9;
+            border-radius: 8px;
+            padding: 15px;
+            height: 400px; /* For demonstration, adjust as needed */
+        }
+
+        .section-title {
+            font-size: 16px;
+            font-weight: 600;
+            margin-bottom: 15px;
+        }
+
+        .activity-list {
+            list-style: none;
+        }
+
+        .activity-item {
+            display: flex;
+            margin-bottom: 15px;
+            padding-bottom: 15px;
+            border-bottom: 1px solid #eee;
+        }
+
+        .activity-icon {
+            width: 36px;
+            height: 36px;
+            border-radius: 50%;
+            background-color: #e6f7ff;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-right: 10px;
+            color: #1890ff;
+        }
+
+        .activity-details {
+            flex: 1;
+        }
+
+        .activity-title {
+            font-weight: 500;
+            margin-bottom: 5px;
+        }
+
+        .activity-time {
+            font-size: 12px;
+            color: #888;
+        }
+
+        /* Responsive styles */
+        @media (max-width: 768px) {
+            .sidebar {
+                width: 60px;
+            }
+
+            .logo span, .menu-item span, .menu-title {
+                display: none;
+            }
+
+            .menu-item i {
+                margin-right: 0;
+            }
+
+            .project-info {
+                flex-direction: column;
+            }
+
+            .info-card {
+                margin-right: 0;
+                margin-bottom: 10px;
+            }
+
+            .project-content {
+                flex-direction: column;
+            }
+
+            .content-main {
+                margin-right: 0;
+                margin-bottom: 20px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Sidebar Section -->
+   {% include 'parts/sidebar.html' %}
+    <!-- Main Content Area -->
+    <main class="main-content">
+        <!-- Header -->
+        <header class="header">
+            <div class="search-bar">
+                <i>🔍</i>
+                <label>
+                    <input type="text" placeholder="Search...">
+                </label>
+            </div>
+
+            <div class="user-actions">
+                <div class="icon-button">
+                    <i>❓</i>
+                </div>
+                <div class="icon-button">
+                    <i>🔔</i>
+                    <span class="notification-badge">3</span>
+                </div>
+                <div class="icon-button">
+                    <i>👤</i>
+                </div>
+            </div>
+        </header>
+
+        <!-- Project Detail -->
+        <div class="project-detail">
+            <div class="project-header">
+                <h1 class="project-title">Web Development Project</h1>
+                <div class="action-buttons">
+                    <button class="btn btn-outline">Share</button>
+                    <button class="btn btn-primary">Edit Project</button>
+                </div>
+            </div>
+
+            <div class="project-info">
+                <div class="info-card">
+                    <div class="card-label">Status</div>
+                    <div class="card-value">In Progress</div>
+                </div>
+                <div class="info-card">
+                    <div class="card-label">Created</div>
+                    <div class="card-value">Feb 20, 2025</div>
+                </div>
+                <div class="info-card">
+                    <div class="card-label">Team</div>
+                    <div class="card-value">4 Members</div>
+                </div>
+                <div class="info-card">
+                    <div class="card-label">Deadline</div>
+                    <div class="card-value">Mar 15, 2025</div>
+                </div>
+            </div>
+
+            <div class="project-content">
+                <div class="content-main">
+                    <h2 class="section-title">Recent Activity</h2>
+
+                    <ul class="activity-list">
+                        <li class="activity-item">
+                            <div class="activity-icon">📝</div>
+                            <div class="activity-details">
+                                <div class="activity-title">Updated project description</div>
+                                <div class="activity-time">Today at 10:30 AM</div>
+                            </div>
+                        </li>
+                        <li class="activity-item">
+                            <div class="activity-icon">🔄</div>
+                            <div class="activity-details">
+                                <div class="activity-title">Frontend components updated</div>
+                                <div class="activity-time">Yesterday at 4:15 PM</div>
+                            </div>
+                        </li>
+                        <li class="activity-item">
+                            <div class="activity-icon">➕</div>
+                            <div class="activity-details">
+                                <div class="activity-title">Added new team member</div>
+                                <div class="activity-time">Feb 24, 2025</div>
+                            </div>
+                        </li>
+                        <li class="activity-item">
+                            <div class="activity-icon">💾</div>
+                            <div class="activity-details">
+                                <div class="activity-title">Database schema finalized</div>
+                                <div class="activity-time">Feb 22, 2025</div>
+                            </div>
+                        </li>
+                    </ul>
+                </div>
+
+                <!-- Content Sidebar - Empty space as requested -->
+                <div class="content-sidebar">
+                    <h2 class="section-title">Project Details</h2>
+                    <!-- This space is intentionally left empty as requested -->
+                    <p style="color: #888; font-style: italic;">Empty sidebar space for custom content</p>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <script>
+        // JavaScript for interactive elements
+        document.addEventListener('DOMContentLoaded', function() {
+            // Menu item click handler
+            const menuItems = document.querySelectorAll('.menu-item');
+            menuItems.forEach(item => {
+                item.addEventListener('click', function(e) {
+                    e.preventDefault();
+                    // Remove active class from all menu items
+                    menuItems.forEach(i => i.classList.remove('active'));
+                    // Add active class to clicked item
+                    this.classList.add('active');
+                });
+            });
+
+            // Search functionality (simplified for demonstration)
+            const searchInput = document.querySelector('.search-bar input');
+            searchInput.addEventListener('keyup', function(e) {
+                if (e.key === 'Enter') {
+                    alert('Searching for: ' + this.value);
+                    this.value = '';
+                }
+            });
+
+            // Button click handlers
+            const shareButton = document.querySelector('.btn-outline');
+            shareButton.addEventListener('click', function() {
+                alert('Share project functionality');
+            });
+
+            const editButton = document.querySelector('.btn-primary');
+            editButton.addEventListener('click', function() {
+                alert('Edit project functionality');
+            });
+        });
+    </script>
+</body>
+</html>
+{% endblock %}
